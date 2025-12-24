@@ -1,6 +1,18 @@
+import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Send } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLanguage();
+
+  const navLinks = [
+    { href: "/", label: t("nav.home") },
+    { href: "/rooms", label: t("nav.rooms") },
+    { href: "/conference", label: t("nav.conference") },
+    { href: "/contacts", label: t("nav.contacts") },
+    { href: "/news", label: t("nav.news") },
+  ];
+
   return (
     <footer className="bg-foreground text-background">
       {/* Gold accent line */}
@@ -12,7 +24,7 @@ const Footer = () => {
           <div>
             <h3 className="font-serif text-3xl font-semibold mb-6">Кызыл Жар</h3>
             <p className="text-background/70 leading-relaxed mb-6">
-              Изысканный отдых и безупречный сервис в самом сердце города. Ваш комфорт — наш приоритет.
+              {t("footer.description")}
             </p>
             <div className="flex gap-4">
               <a
@@ -38,22 +50,16 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-serif text-lg font-semibold mb-6">Навигация</h4>
+            <h4 className="font-serif text-lg font-semibold mb-6">{t("footer.links")}</h4>
             <ul className="space-y-3">
-              {[
-                { href: "#hero", label: "Главная" },
-                { href: "#about", label: "О нас" },
-                { href: "#rooms", label: "Номера" },
-                { href: "#amenities", label: "Услуги" },
-                { href: "#testimonials", label: "Отзывы" },
-              ].map((link) => (
+              {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-background/70 hover:text-primary transition-colors"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -61,18 +67,18 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-serif text-lg font-semibold mb-6">Контакты</h4>
+            <h4 className="font-serif text-lg font-semibold mb-6">{t("footer.contact")}</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                 <span className="text-background/70">
-                  г. Петропавловск, ул. Интернациональная, 47
+                  {t("footer.address")}
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary flex-shrink-0" />
-                <a href="tel:+77152123456" className="text-background/70 hover:text-primary transition-colors">
-                  +7 (7152) 12-34-56
+                <a href="tel:+77152467391" className="text-background/70 hover:text-primary transition-colors">
+                  +7 (7152) 46-73-91
                 </a>
               </li>
               <li className="flex items-center gap-3">
@@ -86,19 +92,19 @@ const Footer = () => {
 
           {/* Hours */}
           <div>
-            <h4 className="font-serif text-lg font-semibold mb-6">Режим работы</h4>
+            <h4 className="font-serif text-lg font-semibold mb-6">{t("footer.hours")}</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-background/70">Ресепшн</p>
-                  <p className="text-background font-medium">Круглосуточно</p>
+                  <p className="text-background/70">{t("footer.reception.label")}</p>
+                  <p className="text-background font-medium">{t("footer.reception.value")}</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-background/70">Заезд / Выезд</p>
+                  <p className="text-background/70">{t("footer.checkin.label")}</p>
                   <p className="text-background font-medium">14:00 / 12:00</p>
                 </div>
               </li>
@@ -109,14 +115,14 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-background/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-background/50 text-sm">
-            © 2024 Кызыл Жар. Все права защищены.
+            © 2024 Кызыл Жар. {t("footer.rights")}
           </p>
           <div className="flex gap-6 text-sm">
             <a href="#" className="text-background/50 hover:text-primary transition-colors">
-              Политика конфиденциальности
+              {t("footer.privacy")}
             </a>
             <a href="#" className="text-background/50 hover:text-primary transition-colors">
-              Условия бронирования
+              {t("footer.terms")}
             </a>
           </div>
         </div>

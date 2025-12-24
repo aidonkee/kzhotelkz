@@ -20,6 +20,8 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.sports": "Спортивным командам",
     "nav.conference": "Конференц-зал",
     "nav.offices": "Аренда офисов",
+    "nav.contacts": "Контакты",
+    "nav.news": "Новости",
     "nav.book": "Забронировать",
     
     // Hero
@@ -48,13 +50,17 @@ const translations: Record<Language, Record<string, string>> = {
     "about.stats.experience": "Лет опыта",
     
     // Rooms
-    "rooms.title": "Наши номера",
+    "rooms.title": "Номера и цены",
     "rooms.subtitle": "Выберите идеальный номер для вашего комфортного пребывания",
     "rooms.from": "от",
     "rooms.night": "ночь",
     "rooms.details": "Подробнее",
-    "rooms.lux.name": "Люкс",
-    "rooms.lux.desc": "Просторный номер с панорамным видом, гостиной зоной и премиальными удобствами",
+    "rooms.family.name": "Семейный",
+    "rooms.family.desc": "Просторный номер для всей семьи с двумя спальнями и гостиной зоной",
+    "rooms.lux.name": "Люкс (2-комн.)",
+    "rooms.lux.desc": "Просторный двухкомнатный номер с панорамным видом и премиальными удобствами",
+    "rooms.semilux.name": "Полулюкс",
+    "rooms.semilux.desc": "Элегантный номер повышенной комфортности с рабочей зоной",
     "rooms.deluxe.name": "Делюкс",
     "rooms.deluxe.desc": "Элегантный номер повышенной комфортности с рабочей зоной и мини-баром",
     "rooms.premium.name": "Премиум",
@@ -65,6 +71,8 @@ const translations: Record<Language, Record<string, string>> = {
     "rooms.econom_plus.desc": "Комфортный номер по доступной цене с улучшенными удобствами",
     "rooms.econom.name": "Эконом",
     "rooms.econom.desc": "Чистый и уютный номер для экономного путешественника",
+    "rooms.smoking.title": "Правила курения",
+    "rooms.smoking.desc": "Курение в номерах строго запрещено. Для курения предусмотрены специальные зоны на территории отеля.",
     
     // Amenities
     "amenities.title": "Удобства и услуги",
@@ -126,6 +134,7 @@ const translations: Record<Language, Record<string, string>> = {
     "conference.description": "Полностью оборудованный конференц-зал для проведения семинаров, презентаций и деловых встреч.",
     "conference.capacity": "Вместимость",
     "conference.capacity.value": "до 150 человек",
+    "conference.people": "человек",
     "conference.equipment": "Оборудование",
     "conference.equipment.projector": "Проектор и экран",
     "conference.equipment.sound": "Звуковая система",
@@ -135,6 +144,14 @@ const translations: Record<Language, Record<string, string>> = {
     "conference.pricing.hour": "в час",
     "conference.pricing.day": "полный день",
     "conference.book": "Забронировать зал",
+    "conference.book.desc": "Оставьте заявку и мы свяжемся с вами для уточнения деталей",
+    "conference.book.note": "Минимальная бронь — 2 часа",
+    "conference.services": "Услуги",
+    "conference.service.seminars": "Семинары и тренинги",
+    "conference.service.trainings": "Корпоративные мероприятия",
+    "conference.service.equipment": "Техническое оборудование включено",
+    "conference.service.catering": "Кейтеринг по запросу",
+    "conference.gallery": "Фотогалерея",
     
     // Offices
     "offices.title": "Аренда офисов",
@@ -154,14 +171,54 @@ const translations: Record<Language, Record<string, string>> = {
     "offices.month": "мес",
     "offices.contact": "Узнать подробнее",
     
+    // Contacts
+    "contacts.title": "Контакты",
+    "contacts.subtitle": "Свяжитесь с нами любым удобным способом",
+    "contacts.info.title": "Контактная информация",
+    "contacts.address.label": "Адрес",
+    "contacts.phone.label": "Телефон",
+    "contacts.email.label": "Email",
+    "contacts.hours.label": "Режим работы",
+    "contacts.form.title": "Напишите нам",
+    "contacts.form.name": "Ваше имя",
+    "contacts.form.email": "Email",
+    "contacts.form.subject": "Тема",
+    "contacts.form.message": "Сообщение",
+    "contacts.form.send": "Отправить",
+    "contacts.map.title": "Как нас найти",
+    "contacts.map.note": "ул. Конституции 54, г. Петропавловск",
+    
+    // News
+    "news.title": "Новости",
+    "news.subtitle": "Последние события и обновления отеля Кызыл Жар",
+    "news.read_more": "Читать далее",
+    "news.category.restaurant": "Ресторан",
+    "news.category.hotel": "Отель",
+    "news.category.events": "Мероприятия",
+    "news.category.conference": "Конференции",
+    "news.item1.title": "Открытие кафе-буфет",
+    "news.item1.desc": "Мы рады представить обновлённый кафе-буфет с расширенным меню завтраков и обедов.",
+    "news.item2.title": "Обновление номерного фонда",
+    "news.item2.desc": "Завершён ремонт номеров категории Люкс с новой мебелью и современным дизайном.",
+    "news.item3.title": "Новогодний корпоратив",
+    "news.item3.desc": "Забронируйте банкетный зал для проведения новогоднего корпоратива со скидкой 20%.",
+    "news.item4.title": "Конференция бизнес-лидеров",
+    "news.item4.desc": "В нашем отеле прошла международная конференция с участием 150 делегатов.",
+    
     // Footer
     "footer.contact": "Контакты",
-    "footer.links": "Быстрые ссылки",
+    "footer.links": "Навигация",
     "footer.social": "Социальные сети",
     "footer.hours": "Часы работы",
-    "footer.address": "г. Петропавловск, ул. Конституции 38",
+    "footer.address": "г. Петропавловск, ул. Конституции 54",
     "footer.reception": "Ресепшн работает круглосуточно",
+    "footer.reception.label": "Ресепшн",
+    "footer.reception.value": "Круглосуточно",
+    "footer.checkin.label": "Заезд / Выезд",
     "footer.rights": "Все права защищены",
+    "footer.privacy": "Политика конфиденциальности",
+    "footer.terms": "Условия бронирования",
+    "footer.description": "Изысканный отдых и безупречный сервис в самом сердце города. Ваш комфорт — наш приоритет.",
   },
   kz: {
     // Navbar
@@ -328,6 +385,8 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.sports": "Sports Teams",
     "nav.conference": "Conference Hall",
     "nav.offices": "Office Rental",
+    "nav.contacts": "Contacts",
+    "nav.news": "News",
     "nav.book": "Book Now",
     
     // Hero
