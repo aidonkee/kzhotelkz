@@ -107,7 +107,7 @@
     background-color: hsl(30 20% 97%);
   }
 
-  /* Oriental lantern pattern overlay */
+  /* Wall sconce lamp pattern overlay */
   body::before {
     content: '';
     position: fixed;
@@ -117,13 +117,13 @@
     bottom: 0;
     pointer-events: none;
     z-index: 0;
-    /* Oriental ornament pattern - lanterns and geometric shapes */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%237f1d1d'%3E%3C!-- Lantern shape --%3E%3Cpath d='M60 10 L68 25 L65 25 L65 55 L72 65 L48 65 L55 55 L55 25 L52 25 Z' opacity='0.06'/%3E%3Cellipse cx='60' cy='8' rx='5' ry='3' opacity='0.06'/%3E%3Crect x='55' y='65' width='10' height='5' rx='2' opacity='0.06'/%3E%3C!-- Corner ornaments --%3E%3Ccircle cx='10' cy='10' r='4' opacity='0.04'/%3E%3Ccircle cx='110' cy='10' r='4' opacity='0.04'/%3E%3Ccircle cx='10' cy='110' r='4' opacity='0.04'/%3E%3Ccircle cx='110' cy='110' r='4' opacity='0.04'/%3E%3C!-- Diamond accents --%3E%3Cpath d='M60 85 L65 90 L60 95 L55 90 Z' opacity='0.04'/%3E%3C/g%3E%3C/svg%3E");
-    background-size: 120px 120px;
-    animation: pulse-glow 5s ease-in-out infinite;
+    /* Wall sconce lamp pattern - brass fixture with glass globe */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='240' viewBox='0 0 200 240'%3E%3Cdefs%3E%3CradialGradient id='glow' cx='50%25' cy='30%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23d4a574' stop-opacity='0.15'/%3E%3Cstop offset='100%25' stop-color='%23d4a574' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cg opacity='0.08'%3E%3C!-- Glow effect behind globe --%3E%3Ccircle cx='100' cy='80' r='55' fill='url(%23glow)'/%3E%3C!-- Glass globe --%3E%3Ccircle cx='100' cy='80' r='40' fill='none' stroke='%237f1d1d' stroke-width='1.5' opacity='0.6'/%3E%3Cellipse cx='100' cy='80' rx='38' ry='38' fill='%237f1d1d' opacity='0.03'/%3E%3C!-- Filament inside globe --%3E%3Cpath d='M100 60 L100 100' stroke='%23d4a574' stroke-width='1' opacity='0.5'/%3E%3Cpath d='M95 70 Q100 75 105 70' stroke='%23d4a574' stroke-width='0.8' fill='none' opacity='0.4'/%3E%3Cpath d='M95 85 Q100 80 105 85' stroke='%23d4a574' stroke-width='0.8' fill='none' opacity='0.4'/%3E%3C!-- Globe base connector --%3E%3Crect x='95' y='118' width='10' height='8' rx='2' fill='%237f1d1d' opacity='0.7'/%3E%3C!-- Arm extending from wall --%3E%3Cpath d='M100 126 Q100 145 100 155 Q100 175 80 185' stroke='%237f1d1d' stroke-width='3' fill='none' stroke-linecap='round' opacity='0.7'/%3E%3C!-- Wall mount plate (oval) --%3E%3Cellipse cx='72' cy='200' rx='12' ry='22' fill='%237f1d1d' opacity='0.6'/%3E%3Cellipse cx='72' cy='200' rx='8' ry='18' fill='%23d4a574' opacity='0.2'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 200px 240px;
+    animation: lamp-flicker 8s ease-in-out infinite;
   }
 
-  /* Warm glow overlay */
+  /* Warm glow spots overlay */
   body::after {
     content: '';
     position: fixed;
@@ -134,10 +134,12 @@
     pointer-events: none;
     z-index: 0;
     background: 
-      radial-gradient(ellipse 600px 600px at 20% 20%, hsl(var(--lantern-glow) / 0.04) 0%, transparent 60%),
-      radial-gradient(ellipse 500px 500px at 80% 70%, hsl(var(--lantern-glow) / 0.03) 0%, transparent 60%),
-      radial-gradient(ellipse 400px 400px at 50% 90%, hsl(var(--lantern-glow) / 0.025) 0%, transparent 50%);
-    animation: pulse-glow 5s ease-in-out infinite reverse;
+      radial-gradient(ellipse 400px 400px at 15% 25%, hsl(var(--lantern-glow) / 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse 350px 350px at 85% 35%, hsl(var(--lantern-glow) / 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse 300px 300px at 50% 75%, hsl(var(--lantern-glow) / 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse 380px 380px at 25% 85%, hsl(var(--lantern-glow) / 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse 320px 320px at 75% 90%, hsl(var(--lantern-glow) / 0.04) 0%, transparent 50%);
+    animation: lamp-glow 8s ease-in-out infinite;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -145,12 +147,42 @@
   }
 }
 
-@keyframes pulse-glow {
+@keyframes lamp-flicker {
   0%, 100% {
+    opacity: 0.4;
+  }
+  15% {
+    opacity: 0.6;
+  }
+  30% {
     opacity: 0.5;
+  }
+  45% {
+    opacity: 0.8;
+  }
+  60% {
+    opacity: 0.55;
+  }
+  75% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes lamp-glow {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  25% {
+    opacity: 0.7;
   }
   50% {
     opacity: 1;
+  }
+  75% {
+    opacity: 0.6;
   }
 }
 
