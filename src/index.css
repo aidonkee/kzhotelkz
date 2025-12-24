@@ -104,11 +104,10 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased relative;
-    /* Subtle lantern pattern background */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='100' viewBox='0 0 80 100'%3E%3Cg fill='%237f1d1d' fill-opacity='0.025'%3E%3Cpath d='M40 8 L48 28 L44 28 L44 70 L52 82 L28 82 L36 70 L36 28 L32 28 Z'/%3E%3Cellipse cx='40' cy='6' rx='6' ry='4'/%3E%3Crect x='34' y='82' width='12' height='6' rx='2'/%3E%3C/g%3E%3C/svg%3E");
-    background-size: 80px 100px;
+    background-color: hsl(30 20% 97%);
   }
 
+  /* Oriental lantern pattern overlay */
   body::before {
     content: '';
     position: fixed;
@@ -117,13 +116,28 @@
     right: 0;
     bottom: 0;
     pointer-events: none;
-    background: 
-      radial-gradient(ellipse 500px 500px at 15% 25%, hsl(var(--lantern-glow) / 0.035) 0%, transparent 50%),
-      radial-gradient(ellipse 450px 450px at 85% 65%, hsl(var(--lantern-glow) / 0.03) 0%, transparent 50%),
-      radial-gradient(ellipse 400px 400px at 50% 15%, hsl(var(--lantern-glow) / 0.02) 0%, transparent 50%),
-      radial-gradient(ellipse 350px 350px at 75% 85%, hsl(var(--lantern-glow) / 0.025) 0%, transparent 50%);
-    animation: lantern-glow 10s ease-in-out infinite alternate;
     z-index: 0;
+    /* Oriental ornament pattern - lanterns and geometric shapes */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%237f1d1d'%3E%3C!-- Lantern shape --%3E%3Cpath d='M60 10 L68 25 L65 25 L65 55 L72 65 L48 65 L55 55 L55 25 L52 25 Z' opacity='0.06'/%3E%3Cellipse cx='60' cy='8' rx='5' ry='3' opacity='0.06'/%3E%3Crect x='55' y='65' width='10' height='5' rx='2' opacity='0.06'/%3E%3C!-- Corner ornaments --%3E%3Ccircle cx='10' cy='10' r='4' opacity='0.04'/%3E%3Ccircle cx='110' cy='10' r='4' opacity='0.04'/%3E%3Ccircle cx='10' cy='110' r='4' opacity='0.04'/%3E%3Ccircle cx='110' cy='110' r='4' opacity='0.04'/%3E%3C!-- Diamond accents --%3E%3Cpath d='M60 85 L65 90 L60 95 L55 90 Z' opacity='0.04'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 120px 120px;
+    animation: pulse-glow 5s ease-in-out infinite;
+  }
+
+  /* Warm glow overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: 
+      radial-gradient(ellipse 600px 600px at 20% 20%, hsl(var(--lantern-glow) / 0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 500px 500px at 80% 70%, hsl(var(--lantern-glow) / 0.03) 0%, transparent 60%),
+      radial-gradient(ellipse 400px 400px at 50% 90%, hsl(var(--lantern-glow) / 0.025) 0%, transparent 50%);
+    animation: pulse-glow 5s ease-in-out infinite reverse;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -131,15 +145,12 @@
   }
 }
 
-@keyframes lantern-glow {
-  0% {
+@keyframes pulse-glow {
+  0%, 100% {
     opacity: 0.5;
   }
   50% {
     opacity: 1;
-  }
-  100% {
-    opacity: 0.6;
   }
 }
 

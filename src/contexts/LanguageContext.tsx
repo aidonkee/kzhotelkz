@@ -219,6 +219,30 @@ const translations: Record<Language, Record<string, string>> = {
     "footer.privacy": "Политика конфиденциальности",
     "footer.terms": "Условия бронирования",
     "footer.description": "Изысканный отдых и безупречный сервис в самом сердце города. Ваш комфорт — наш приоритет.",
+    
+    // Booking
+    "booking.title": "Бронирование номера",
+    "booking.subtitle": "Заполните форму и мы свяжемся с вами в WhatsApp",
+    "booking.name": "Ваше имя",
+    "booking.name.placeholder": "Введите ваше имя",
+    "booking.room_type": "Тип номера",
+    "booking.select_room": "Выберите номер",
+    "booking.whatsapp_info": "После отправки формы вы будете перенаправлены в WhatsApp для подтверждения бронирования",
+    "booking.send": "Отправить заявку",
+    "booking.prefer_call": "Предпочитаете позвонить?",
+    "booking.book_this_room": "Забронировать этот номер",
+    
+    // Room amenities
+    "room.amenity.king_bed": "Кровать King-size",
+    "room.amenity.queen_bed": "Кровать Queen-size",
+    "room.amenity.double_bed": "Двуспальная кровать",
+    "room.amenity.single_bed": "Односпальная кровать",
+    "room.amenity.sofa_bed": "Раскладной диван",
+    "room.amenity.minibar": "Мини-бар",
+    "room.amenity.safe": "Сейф",
+    "room.amenity.workspace": "Рабочая зона",
+    "room.amenity.hairdryer": "Фен",
+    "room.amenity.bathrobe": "Халат и тапочки",
   },
   kz: {
     // Navbar
