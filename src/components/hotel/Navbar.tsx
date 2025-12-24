@@ -41,11 +41,11 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b border-border py-3">
-      <div className="container mx-auto px-6 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-border/50 py-2">
+      <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <span className="font-serif text-2xl font-semibold tracking-wide text-primary">
+          <span className="font-serif text-xl lg:text-2xl font-semibold tracking-wide text-primary">
             Кызыл Жар
           </span>
         </Link>
@@ -59,7 +59,7 @@ const Navbar = () => {
               className={`text-sm font-medium tracking-wide transition-colors duration-300 hover:text-primary ${
                 isActive(link.href) 
                   ? "text-primary" 
-                  : "text-foreground"
+                  : "text-muted-foreground"
               }`}
             >
               {link.label}
@@ -68,11 +68,11 @@ const Navbar = () => {
           
           {/* Services Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium tracking-wide transition-colors duration-300 hover:text-primary text-foreground">
+            <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium tracking-wide transition-colors duration-300 hover:text-primary text-muted-foreground">
               {t("nav.amenities")}
               <ChevronDown className="w-3 h-3" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="center" className="bg-white border-border min-w-[200px]">
+            <DropdownMenuContent align="center" className="bg-white/95 backdrop-blur-md border-border min-w-[200px]">
               {servicesLinks.map((link) => (
                 <DropdownMenuItem key={link.href} asChild>
                   <Link
@@ -89,18 +89,20 @@ const Navbar = () => {
         </nav>
 
         {/* Right Side - Language & CTA */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-3">
           <a
-            href="tel:+77172123456"
-            className="flex items-center gap-2 text-sm font-medium transition-colors duration-300 text-foreground hover:text-primary"
+            href="tel:+77152461184"
+            className="flex items-center gap-1.5 text-sm font-medium transition-colors duration-300 text-muted-foreground hover:text-primary"
           >
-            <Phone className="w-4 h-4 text-primary" />
-            +7 (7172) 12-34-56
+            <Phone className="w-3.5 h-3.5 text-primary" />
+            <span className="hidden lg:inline">+7 (7152) 46-11-84</span>
           </a>
           <LanguageSelector />
-          <Button className="btn-luxury text-sm py-2 px-6">
-            {t("nav.book")}
-          </Button>
+          <Link to="/booking">
+            <Button className="btn-luxury text-sm py-1.5 px-4">
+              {t("nav.book")}
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile Menu Button - only on small screens */}
@@ -121,34 +123,36 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-border mt-3 mx-4 rounded-2xl p-6 shadow-lg animate-fade-in">
-          <nav className="flex flex-col gap-3">
+        <div className="md:hidden bg-white/95 backdrop-blur-md border-t border-border/50 mt-2 mx-3 rounded-xl p-4 shadow-lg animate-fade-in">
+          <nav className="flex flex-col gap-2">
             {mainNavLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
-                className={`font-medium py-2 transition-colors ${
-                  isActive(link.href) ? "text-primary" : "text-foreground hover:text-primary"
+                className={`text-sm font-medium py-2 transition-colors ${
+                  isActive(link.href) ? "text-primary" : "text-muted-foreground hover:text-primary"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
             <div className="h-px bg-border my-2" />
-            <p className="text-sm text-muted-foreground font-medium">{t("nav.amenities")}</p>
+            <p className="text-xs text-muted-foreground font-medium">{t("nav.amenities")}</p>
             {servicesLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
-                className="flex items-center gap-3 text-foreground py-2 hover:text-primary transition-colors pl-2"
+                className="flex items-center gap-3 text-muted-foreground py-2 hover:text-primary transition-colors pl-2 text-sm"
               >
                 <link.icon className="w-4 h-4 text-primary" />
                 {link.label}
               </Link>
             ))}
-            <Button className="btn-luxury mt-4">
-              {t("nav.book")}
-            </Button>
+            <Link to="/booking" className="mt-3">
+              <Button className="btn-luxury w-full text-sm py-2">
+                {t("nav.book")}
+              </Button>
+            </Link>
           </nav>
         </div>
       )}

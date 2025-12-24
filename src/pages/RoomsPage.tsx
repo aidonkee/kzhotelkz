@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, BedDouble, Users, Wifi, Coffee, Bath } from "lucide-react";
+import { AlertTriangle, Users, Wifi, Coffee, Bath } from "lucide-react";
 
 const RoomsPage = () => {
   const { t } = useLanguage();
@@ -69,7 +70,7 @@ const RoomsPage = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-16 bg-background">
+    <div className="min-h-screen pt-20 pb-16 relative z-10">
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-12">
@@ -140,9 +141,11 @@ const RoomsPage = () => {
                     <span className="text-lg font-bold text-gold ml-1">{room.price} ₸</span>
                     <span className="text-sm text-muted-foreground">/{t("rooms.night")}</span>
                   </div>
-                  <Button className="btn-luxury text-sm">
-                    {t("rooms.details")}
-                  </Button>
+                  <Link to={`/room/${room.id}`}>
+                    <Button className="btn-luxury text-sm">
+                      {t("rooms.details")}
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
