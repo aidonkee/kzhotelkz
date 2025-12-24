@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Phone, ChevronDown, Utensils, Users, Building, Briefcase } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, Phone, ChevronDown, Utensils, Users, Building, Briefcase, Newspaper, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSelector from "./LanguageSelector";
@@ -14,6 +15,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { t } = useLanguage();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,19 +25,29 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
   const mainNavLinks = [
-    { href: "#hero", label: t("nav.home") },
-    { href: "#rooms", label: t("nav.rooms") },
-    { href: "#amenities", label: t("nav.amenities") },
-    { href: "#testimonials", label: t("nav.testimonials") },
+    { href: "/", label: t("nav.home") },
+    { href: "/rooms", label: t("nav.rooms") },
+    { href: "/conference", label: t("nav.conference") },
+    { href: "/contacts", label: t("nav.contacts") },
+    { href: "/news", label: t("nav.news") },
   ];
 
   const servicesLinks = [
-    { href: "#restaurant", label: t("nav.restaurant"), icon: Utensils },
-    { href: "#sports", label: t("nav.sports"), icon: Users },
-    { href: "#conference", label: t("nav.conference"), icon: Building },
-    { href: "#offices", label: t("nav.offices"), icon: Briefcase },
+    { href: "/#restaurant", label: t("nav.restaurant"), icon: Utensils },
+    { href: "/#sports", label: t("nav.sports"), icon: Users },
+    { href: "/#offices", label: t("nav.offices"), icon: Briefcase },
   ];
+
+  const isActive = (path: string) => {
+    if (path === "/") return location.pathname === "/";
+    return location.pathname.startsWith(path);
+  };
 
   return (
     <header
@@ -47,26 +59,28 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <a href="#hero" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <span className={`font-serif text-2xl font-semibold tracking-wide transition-colors duration-300 ${
             isScrolled ? "text-foreground" : "text-white"
           }`}>
             Кызыл Жар
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden xl:flex items-center gap-6">
           {mainNavLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
-              href={link.href}
+              to={link.href}
               className={`text-sm font-medium tracking-wide transition-colors duration-300 hover:text-gold ${
-                isScrolled ? "text-foreground" : "text-white"
+                isActive(link.href) 
+                  ? "text-gold" 
+                  : isScrolled ? "text-foreground" : "text-white"
               }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
           
           {/* Services Dropdown */}
@@ -80,13 +94,13 @@ const Navbar = () => {
             <DropdownMenuContent align="center" className="bg-white/95 backdrop-blur-md border-gold/20 min-w-[200px]">
               {servicesLinks.map((link) => (
                 <DropdownMenuItem key={link.href} asChild>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="flex items-center gap-3 cursor-pointer py-2"
                   >
                     <link.icon className="w-4 h-4 text-gold" />
                     <span>{link.label}</span>
-                  </a>
+                  </Link>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -131,27 +145,27 @@ const Navbar = () => {
         <div className="xl:hidden glass mt-2 mx-4 rounded-2xl p-6 animate-fade-in">
           <nav className="flex flex-col gap-3">
             {mainNavLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={link.href}
-                className="text-foreground font-medium py-2 hover:text-gold transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
+                to={link.href}
+                className={`font-medium py-2 transition-colors ${
+                  isActive(link.href) ? "text-gold" : "text-foreground hover:text-gold"
+                }`}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <div className="h-px bg-border my-2" />
             <p className="text-sm text-muted-foreground font-medium">{t("nav.amenities")}</p>
             {servicesLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={link.href}
+                to={link.href}
                 className="flex items-center gap-3 text-foreground py-2 hover:text-gold transition-colors pl-2"
-                onClick={() => setIsMobileMenuOpen(false)}
               >
                 <link.icon className="w-4 h-4 text-gold" />
                 {link.label}
-              </a>
+              </Link>
             ))}
             <Button className="btn-luxury mt-4">
               {t("nav.book")}
