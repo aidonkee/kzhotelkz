@@ -76,7 +76,7 @@ const RoomsSection = () => {
   };
 
   return (
-    <section id="rooms" className="section-padding bg-background">
+    <section id="rooms" className="section-padding">
       <div className="container mx-auto">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">

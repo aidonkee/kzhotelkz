@@ -1,151 +1,119 @@
-import { useState } from "react";
-import { Calendar, Users, ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import { format } from "date-fns";
-import { ru } from "date-fns/locale";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const HeroSection = () => {
-  const [checkIn, setCheckIn] = useState<Date>();
-  const [checkOut, setCheckOut] = useState<Date>();
-  const [guests, setGuests] = useState(2);
-  const [isGuestsOpen, setIsGuestsOpen] = useState(false);
+  const { t } = useLanguage();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // 1. СПИСОК ФОТОГРАФИЙ ДЛЯ ФОНА
+  const heroImages = [
+    "/picture.png",
+    "/image copy 18.png",
+    "/image copy 19.png",
+  ];
+
+  // 2. Логика переключения каждые 5 секунд
+  useEffect(() => {
+    if (heroImages.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+    }, 5000); 
+
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
+
+  // Функция для ручного переключения
+  const handleDotClick = (index) => {
+    setCurrentImageIndex(index);
+  };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=2000&q=80"
-          alt="Отель Кызыл Жар - Лобби"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+      
+      {/* 3. КАРУСЕЛЬ ФОНА */}
+      <div className="absolute inset-0 z-0">
+        {heroImages.map((src, index) => (
+          <img
+            key={src}
+            src={src}
+            alt={`Hero background ${index + 1}`}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+              index === currentImageIndex ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+        
+        {/* Затемнение фона */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
       </div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 text-center">
         {/* Headline */}
-        <div className="max-w-4xl mx-auto mb-12 animate-fade-up">
-          <p className="text-primary font-medium tracking-[0.3em] uppercase text-sm mb-6">
-            Добро пожаловать в
-          </p>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-semibold text-white mb-6 leading-tight">
-            Кызыл Жар
+        <div className="max-w-4xl mx-auto mb-10 animate-fade-up">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-semibold text-white mb-6 leading-tight drop-shadow-lg">
+            {t("hero.title")}
           </h1>
-          <p className="text-white/90 text-lg md:text-xl font-light max-w-2xl mx-auto">
-            Откройте для себя безупречный сервис и изысканный комфорт в самом сердце города
+          <p className="text-white/90 text-lg md:text-2xl font-light max-w-2xl mx-auto drop-shadow-md">
+            {t("hero.subtitle")}
           </p>
         </div>
 
-        {/* Booking Form */}
-        <div className="glass rounded-3xl p-6 md:p-8 max-w-4xl mx-auto animate-fade-up" style={{ animationDelay: "0.2s" }}>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-            {/* Check-in */}
-            <div className="text-left">
-              <label className="text-sm text-muted-foreground font-medium mb-2 block">
-                Заезд
-              </label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <button className="w-full flex items-center gap-3 p-4 bg-background rounded-xl border border-border hover:border-primary transition-colors text-left">
-                    <Calendar className="w-5 h-5 text-primary" />
-                    <span className="text-foreground">
-                      {checkIn ? format(checkIn, "dd MMM yyyy", { locale: ru }) : "Выберите дату"}
-                    </span>
-                  </button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 bg-background border-border z-50" align="start">
-                  <CalendarComponent
-                    mode="single"
-                    selected={checkIn}
-                    onSelect={setCheckIn}
-                    disabled={(date) => date < new Date()}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-
-            {/* Check-out */}
-            <div className="text-left">
-              <label className="text-sm text-muted-foreground font-medium mb-2 block">
-                Выезд
-              </label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <button className="w-full flex items-center gap-3 p-4 bg-background rounded-xl border border-border hover:border-primary transition-colors text-left">
-                    <Calendar className="w-5 h-5 text-primary" />
-                    <span className="text-foreground">
-                      {checkOut ? format(checkOut, "dd MMM yyyy", { locale: ru }) : "Выберите дату"}
-                    </span>
-                  </button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 bg-background border-border z-50" align="start">
-                  <CalendarComponent
-                    mode="single"
-                    selected={checkOut}
-                    onSelect={setCheckOut}
-                    disabled={(date) => date < (checkIn || new Date())}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-
-            {/* Guests */}
-            <div className="text-left">
-              <label className="text-sm text-muted-foreground font-medium mb-2 block">
-                Гости
-              </label>
-              <Popover open={isGuestsOpen} onOpenChange={setIsGuestsOpen}>
-                <PopoverTrigger asChild>
-                  <button className="w-full flex items-center justify-between gap-3 p-4 bg-background rounded-xl border border-border hover:border-primary transition-colors text-left">
-                    <div className="flex items-center gap-3">
-                      <Users className="w-5 h-5 text-primary" />
-                      <span className="text-foreground">{guests} {guests === 1 ? "гость" : guests < 5 ? "гостя" : "гостей"}</span>
-                    </div>
-                    <ChevronDown className="w-4 h-4 text-muted-foreground" />
-                  </button>
-                </PopoverTrigger>
-                <PopoverContent className="w-48 p-4 bg-background border-border z-50" align="start">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Гости</span>
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => setGuests(Math.max(1, guests - 1))}
-                        className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
-                      >
-                        -
-                      </button>
-                      <span className="w-6 text-center">{guests}</span>
-                      <button
-                        onClick={() => setGuests(Math.min(10, guests + 1))}
-                        className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </div>
-
-            {/* Search Button */}
-            <Button className="btn-luxury h-[58px] text-base">
-              Проверить наличие
+        {/* Buttons Action Area */}
+        <div 
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up" 
+          style={{ animationDelay: "0.2s" }}
+        >
+          <Link to="/booking" className="w-full sm:w-auto">
+            <Button className="btn-luxury h-14 px-10 text-lg w-full sm:w-auto shadow-lg hover:shadow-primary/50">
+              {t("nav.book")}
             </Button>
-          </div>
+          </Link>
+
+          <Link to="/rooms" className="w-full sm:w-auto">
+            <Button 
+              variant="outline" 
+              className="h-14 px-10 text-lg w-full sm:w-auto bg-white/10 backdrop-blur-sm border-white/80 text-white hover:bg-white hover:text-primary transition-all duration-300"
+            >
+              {t("nav.rooms")}
+            </Button>
+          </Link>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
-        <div className="w-6 h-10 rounded-full border-2 border-white/50 flex items-start justify-center p-2">
+      {/* ОБЪЕДИНЕННЫЙ БЛОК: Мышка + Точки 
+          Расположен по центру (left-1/2), выровнен колонкой (flex-col).
+          Это гарантирует, что центр мышки и центр ряда точек совпадают идеально.
+      */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-6 animate-float">
+        
+        {/* Мышка */}
+        <div className="w-6 h-10 rounded-full border-2 border-white/50 flex items-start justify-center p-2 backdrop-blur-sm">
           <div className="w-1 h-2 bg-white/80 rounded-full animate-bounce" />
         </div>
+
+        {/* Точки */}
+        <div className="flex gap-4 items-center justify-center">
+          {heroImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handleDotClick(index)}
+              // Используем w-2 h-2 для ВСЕХ точек, чтобы сетка не дергалась.
+              // Увеличение делаем через scale.
+              className={`rounded-full transition-all duration-500 ease-in-out w-2 h-2 ${
+                index === currentImageIndex 
+                  ? "bg-white scale-[1.75] shadow-[0_0_8px_rgba(255,255,255,0.8)] opacity-100" 
+                  : "bg-white/40 hover:bg-white/70 hover:scale-125"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
+
     </section>
   );
 };

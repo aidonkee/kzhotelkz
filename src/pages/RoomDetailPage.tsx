@@ -3,128 +3,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Users, Wifi, Coffee, Bath, Tv, AirVent, Check } from "lucide-react";
 
-const roomsData = [
-  {
-    id: "family",
-    nameKey: "rooms.family.name",
-    descKey: "rooms.family.desc",
-    price: "45 000",
-    capacity: "4",
-    size: "55 м²",
-    image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1200&q=80",
-    gallery: [
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80",
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80",
-      "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&q=80",
-    ],
-    features: ["wifi", "coffee", "bath", "tv", "ac"],
-    amenities: [
-      "room.amenity.king_bed",
-      "room.amenity.sofa_bed",
-      "room.amenity.minibar",
-      "room.amenity.safe",
-      "room.amenity.workspace",
-      "room.amenity.hairdryer",
-    ],
-  },
-  {
-    id: "lux",
-    nameKey: "rooms.lux.name",
-    descKey: "rooms.lux.desc",
-    price: "40 000",
-    capacity: "2",
-    size: "45 м²",
-    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=80",
-    gallery: [
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80",
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80",
-    ],
-    features: ["wifi", "coffee", "bath", "tv", "ac"],
-    amenities: [
-      "room.amenity.king_bed",
-      "room.amenity.minibar",
-      "room.amenity.safe",
-      "room.amenity.workspace",
-      "room.amenity.hairdryer",
-      "room.amenity.bathrobe",
-    ],
-  },
-  {
-    id: "semilux",
-    nameKey: "rooms.semilux.name",
-    descKey: "rooms.semilux.desc",
-    price: "30 000",
-    capacity: "2",
-    size: "35 м²",
-    image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=1200&q=80",
-    gallery: [
-      "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&q=80",
-      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80",
-    ],
-    features: ["wifi", "coffee", "tv"],
-    amenities: [
-      "room.amenity.queen_bed",
-      "room.amenity.minibar",
-      "room.amenity.workspace",
-      "room.amenity.hairdryer",
-    ],
-  },
-  {
-    id: "standard",
-    nameKey: "rooms.standard.name",
-    descKey: "rooms.standard.desc",
-    price: "20 000",
-    capacity: "2",
-    size: "25 м²",
-    image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80",
-    gallery: [
-      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80",
-      "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&q=80",
-    ],
-    features: ["wifi", "tv"],
-    amenities: [
-      "room.amenity.double_bed",
-      "room.amenity.workspace",
-      "room.amenity.hairdryer",
-    ],
-  },
-  {
-    id: "econom_plus",
-    nameKey: "rooms.econom_plus.name",
-    descKey: "rooms.econom_plus.desc",
-    price: "15 000",
-    capacity: "2",
-    size: "20 м²",
-    image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1200&q=80",
-    gallery: [
-      "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&q=80",
-      "https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=800&q=80",
-    ],
-    features: ["wifi"],
-    amenities: [
-      "room.amenity.double_bed",
-      "room.amenity.hairdryer",
-    ],
-  },
-  {
-    id: "econom",
-    nameKey: "rooms.econom.name",
-    descKey: "rooms.econom.desc",
-    price: "10 000",
-    capacity: "1-2",
-    size: "15 м²",
-    image: "https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=1200&q=80",
-    gallery: [
-      "https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=800&q=80",
-    ],
-    features: ["wifi"],
-    amenities: [
-      "room.amenity.single_bed",
-      "room.amenity.hairdryer",
-    ],
-  },
-];
-
 const featureIcons: Record<string, React.ReactNode> = {
   wifi: <Wifi className="w-5 h-5" />,
   coffee: <Coffee className="w-5 h-5" />,
@@ -133,17 +11,198 @@ const featureIcons: Record<string, React.ReactNode> = {
   ac: <AirVent className="w-5 h-5" />,
 };
 
-const featureLabels: Record<string, string> = {
-  wifi: "Wi-Fi",
-  coffee: "Кофемашина",
-  bath: "Ванна",
-  tv: "ТВ",
-  ac: "Кондиционер",
-};
-
 const RoomDetailPage = () => {
   const { id } = useParams();
   const { t } = useLanguage();
+
+  const featureLabels: Record<string, string> = {
+    wifi: t("amenities.wifi"),
+    coffee: t("amenities.coffee"),
+    bath: t("amenities.spa"),
+    tv: "TV",
+    ac: t("conference.equipment.climate"),
+  };
+
+  // ДАННЫЕ СИНХРОНИЗИРОВАНЫ С ROOMSPAGE
+  const roomsData = [
+    // --- Одноместные ---
+    {
+      id: "single-econom",
+      name: t("rooms.single_econom.name"),
+      description: t("rooms.single_econom.desc"),
+      price: "8 000",
+      capacity: "1",
+      images: ["/1-place-econom/picture-1.jpg", "/1-place-econom/picture-2.jpg", "/1-place-econom/picture-3.jpg"],
+      features: ["wifi", "tv"],
+      amenities: ["room.amenity.single_bed", "room.amenity.hairdryer"],
+    },
+    {
+      id: "single-econom-wide",
+      name: t("rooms.single_econom_wide.name"),
+      description: t("rooms.single_econom_wide.desc"),
+      price: "9 000",
+      capacity: "1",
+      images: ["/1-place-econom/picture-1.jpg", "/1-place-econom/picture-2.jpg"],
+      features: ["wifi", "tv"],
+      amenities: ["room.amenity.double_bed", "room.amenity.hairdryer"],
+    },
+    {
+      id: "single-two-room",
+      name: t("rooms.single_two_room.name"),
+      description: t("rooms.single_two_room.desc"),
+      price: "10 000",
+      capacity: "1",
+      images: ["/1-pace-2room-econom+/picture-1.jpg", "/1-pace-2room-econom+/picture-2.jpg", "/1-pace-2room-econom+/picture-3.jpg"],
+      features: ["wifi", "tv", "bath"],
+      amenities: ["room.amenity.sofa_bed", "room.amenity.single_bed"],
+    },
+    {
+      id: "econom-plus",
+      name: t("rooms.econom_plus.name"),
+      description: t("rooms.econom_plus.desc"),
+      price: "11 000",
+      capacity: "1-2",
+      images: ["/1-place-econom+/picture-1.jpg", "/1-place-econom+/picture-2.jpg"],
+      features: ["wifi", "tv"],
+      amenities: ["room.amenity.double_bed", "room.amenity.workspace"],
+    },
+    {
+      id: "single-standard",
+      name: t("rooms.single_standard.name"),
+      description: t("rooms.single_standard.desc"),
+      price: "12 000",
+      capacity: "1",
+      images: ["/one-place-standart/picture-1.jpg", "/one-place-standart/picture-2.jpg", "/one-place-standart/picture-3.jpg"],
+      features: ["wifi", "tv", "bath", "coffee"],
+      amenities: ["room.amenity.single_bed", "room.amenity.minibar"],
+    },
+    {
+      id: "single-semilux",
+      name: t("rooms.single_semilux.name"),
+      description: t("rooms.single_semilux.desc"),
+      price: "15 000",
+      capacity: "1",
+      images: ["/1-place-semilux/picture-1.jpg", "/1-place-semilux/picture-2.jpg"],
+      features: ["wifi", "tv", "bath", "coffee"],
+      amenities: ["room.amenity.queen_bed", "room.amenity.hairdryer", "room.amenity.bathrobe"],
+    },
+
+    // --- Двухместные ---
+    {
+      id: "double-econom",
+      name: t("rooms.double_econom.name"),
+      description: t("rooms.double_econom.desc"),
+      price: "12 000",
+      capacity: "2",
+      images: ["/2-lace-econom/picture-1.jpg", "/2-lace-econom/picture-2.jpg"],
+      features: ["wifi", "tv"],
+      amenities: ["room.amenity.double_bed", "room.amenity.hairdryer"],
+    },
+    {
+      id: "double-econom-plus",
+      name: t("rooms.double_econom_plus.name"),
+      description: t("rooms.double_econom_plus.desc"),
+      price: "16 000",
+      capacity: "2",
+      images: ["/2-place-econom+/picture-1.jpg", "/2-place-econom+/picture-2.jpg"],
+      features: ["wifi", "tv", "bath", "coffee"],
+      amenities: ["room.amenity.double_bed", "room.amenity.workspace"],
+    },
+    {
+      id: "double-standard",
+      name: t("rooms.double_standard.name"),
+      description: t("rooms.double_standard.desc"),
+      price: "18 000",
+      capacity: "2",
+      images: ["/2-place-standard/45-photo_5361824987964182338_y (1).jpg", "/2-place-standard/46-photo_5361824987964182336_y (1).jpg"],
+      features: ["wifi", "tv", "bath", "coffee"],
+      amenities: ["room.amenity.queen_bed", "room.amenity.minibar"],
+    },
+
+    // --- Трёх/Четырёхместные ---
+    {
+      id: "triple-econom",
+      name: t("rooms.triple_econom.name"),
+      description: t("rooms.triple_econom.desc"),
+      price: "15 000",
+      capacity: "3",
+      images: ["/3-place-econom/15-photo_5361824987964182330_y (1).jpg", "/3-place-econom/47-photo_5361824987964182334_y (1).jpg", "/3-place-econom/48-photo_5361824987964182335_y (1).jpg"],
+      features: ["wifi", "tv"],
+      amenities: ["room.amenity.single_bed", "room.amenity.hairdryer"],
+    },
+    {
+      id: "triple",
+      name: t("rooms.triple.name"),
+      description: t("rooms.triple.desc"),
+      price: "18 000",
+      capacity: "3",
+      images: ["/3-place-econom+/picture-1.jpg", "/3-place-econom+/picture-2.jpg", "/3-place-econom+/picture-3.jpg"],
+      features: ["wifi", "tv", "bath"],
+      amenities: ["room.amenity.single_bed", "room.amenity.workspace"],
+    },
+    {
+      id: "quadruple-econom",
+      name: t("rooms.quadruple_econom.name"),
+      description: t("rooms.quadruple_econom.desc"),
+      price: "20 000",
+      capacity: "4",
+      images: ["/4-place-econom/14-photo_5361824987964182328_y (1).jpg", "/4-place-econom/22-photo_5361824987964182329_y (1).jpg"],
+      features: ["wifi", "tv"],
+      amenities: ["room.amenity.single_bed", "room.amenity.hairdryer"],
+    },
+
+    // --- Полулюксы и Люксы ---
+    {
+      id: "double-semilux",
+      name: t("rooms.double_semilux.name"),
+      description: t("rooms.double_semilux.desc"),
+      price: "22 000",
+      capacity: "2",
+      images: ["/semi-lux-2-place/10-photo_5361824987964182344_y (1).jpg", "/semi-lux-2-place/11-photo_5361824987964182345_y (1).jpg", "/semi-lux-2-place/12-photo_5361824987964182343_y (1).jpg"],
+      features: ["wifi", "tv", "bath", "ac", "coffee"],
+      amenities: ["room.amenity.queen_bed", "room.amenity.sofa_bed", "room.amenity.minibar"],
+    },
+    {
+      id: "family-2",
+      name: t("rooms.family_2place.name"),
+      description: t("rooms.family_2place.desc"),
+      price: "25 000",
+      capacity: "2-3",
+      images: ["/family-2place/1-IMAGE 2025-12-25 20:21:50.jpg", "/family-2place/2-IMAGE 2025-12-25 20:21:44.jpg", "/family-2place/28-photo_5361824987964182368_y (1).jpg"],
+      features: ["wifi", "tv", "bath", "ac", "coffee"],
+      amenities: ["room.amenity.queen_bed", "room.amenity.minibar"],
+    },
+    {
+      id: "family",
+      name: t("rooms.family_3room.name"),
+      description: t("rooms.family_3room.desc"),
+      price: "30 000",
+      capacity: "4-6",
+      images: ["/family-3-room/1-IMAGE 2025-12-25 20:21:35.jpg", "/family-3-room/2-IMAGE 2025-12-25 20:21:34.jpg", "/family-3-room/32-photo_5361824987964182364_y (1).jpg"],
+      features: ["wifi", "tv", "bath", "ac", "coffee"],
+      amenities: ["room.amenity.king_bed", "room.amenity.sofa_bed", "room.amenity.bathrobe"],
+    },
+    {
+      id: "lux-2room",
+      name: t("rooms.lux_2room.name"),
+      description: t("rooms.lux_2room.desc"),
+      price: "35 000",
+      capacity: "2-4",
+      images: ["/2-room-lux/picture-1.jpg", "/2-room-lux/picture-2.jpg", "/2-room-lux/picture-3.jpg", "/2-room-lux/picture-4.jpg"],
+      features: ["wifi", "tv", "bath", "ac", "coffee"],
+      amenities: ["room.amenity.king_bed", "room.amenity.minibar", "room.amenity.bathrobe", "room.amenity.safe"],
+    },
+    {
+      id: "lux-3room",
+      name: t("rooms.lux_3room.name"),
+      description: t("rooms.lux_3room.desc"),
+      price: "45 000",
+      capacity: "4-6",
+      images: ["/3-room-lux/17-photo_5361824987964182350_y (1).jpg", "/3-room-lux/18-photo_5361824987964182349_y (1).jpg", "/3-room-lux/23-photo_5361824987964182347_y (1).jpg"],
+      features: ["wifi", "tv", "bath", "ac", "coffee"],
+      amenities: ["room.amenity.king_bed", "room.amenity.sofa_bed", "room.amenity.minibar", "room.amenity.safe", "room.amenity.bathrobe"],
+    },
+  ];
 
   const room = roomsData.find((r) => r.id === id);
 
@@ -152,10 +211,10 @@ const RoomDetailPage = () => {
       <div className="min-h-screen pt-24 pb-16 flex items-center justify-center relative z-10">
         <div className="text-center">
           <h1 className="font-serif text-3xl font-bold text-foreground mb-4">
-            Номер не найден
+            {t("rooms.details")}
           </h1>
           <Link to="/rooms">
-            <Button variant="outline">Вернуться к номерам</Button>
+            <Button variant="outline">{t("rooms.title")}</Button>
           </Link>
         </div>
       </div>
@@ -165,7 +224,6 @@ const RoomDetailPage = () => {
   return (
     <div className="min-h-screen pt-20 pb-16 relative z-10">
       <div className="container mx-auto px-6">
-        {/* Back Button */}
         <Link
           to="/rooms"
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6"
@@ -175,26 +233,24 @@ const RoomDetailPage = () => {
         </Link>
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Left - Images */}
+          {/* СЕТКА ФОТОГРАФИЙ (БОЛЬШАЯ + МАЛЕНЬКИЕ) */}
           <div className="space-y-4">
-            {/* Main Image */}
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden">
+            <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-white/20">
               <img
-                src={room.image}
-                alt={t(room.nameKey)}
+                src={room.images && room.images.length > 0 ? room.images[0] : "/placeholder.svg"}
+                alt={room.name}
                 className="w-full h-full object-cover"
               />
             </div>
 
-            {/* Gallery */}
-            {room.gallery.length > 1 && (
+            {room.images && room.images.length > 1 && (
               <div className="grid grid-cols-3 gap-3">
-                {room.gallery.slice(0, 3).map((img, idx) => (
-                  <div key={idx} className="aspect-square rounded-lg overflow-hidden">
+                {room.images.slice(1).map((img, idx) => (
+                  <div key={idx} className="aspect-square rounded-lg overflow-hidden cursor-pointer group">
                     <img
                       src={img}
-                      alt={`${t(room.nameKey)} ${idx + 1}`}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      alt={`${room.name} ${idx + 2}`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                 ))}
@@ -202,12 +258,10 @@ const RoomDetailPage = () => {
             )}
           </div>
 
-          {/* Right - Details */}
           <div className="space-y-6">
-            {/* Title & Price */}
             <div>
               <h1 className="font-serif text-3xl md:text-4xl font-bold text-primary mb-2">
-                {t(room.nameKey)}
+                {room.name}
               </h1>
               <div className="flex items-baseline gap-2">
                 <span className="text-3xl font-bold text-gold">{room.price} ₸</span>
@@ -215,30 +269,24 @@ const RoomDetailPage = () => {
               </div>
             </div>
 
-            {/* Quick Info */}
             <div className="flex flex-wrap gap-4 py-4 border-y border-border">
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Users className="w-5 h-5 text-primary" />
                 <span>{room.capacity} {t("hero.guests_plural")}</span>
               </div>
-              <div className="text-muted-foreground">
-                <span className="font-medium">{room.size}</span>
-              </div>
             </div>
 
-            {/* Description */}
             <p className="text-muted-foreground leading-relaxed">
-              {t(room.descKey)}
+              {room.description}
             </p>
 
-            {/* Features */}
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Удобства в номере</h3>
+              <h3 className="font-semibold text-foreground mb-3">{t("amenities.title")}</h3>
               <div className="flex flex-wrap gap-3">
                 {room.features.map((feature) => (
                   <div
                     key={feature}
-                    className="flex items-center gap-2 bg-secondary px-4 py-2 rounded-lg"
+                    className="flex items-center gap-2 bg-white/50 backdrop-blur-sm border border-white/40 px-4 py-2 rounded-lg"
                   >
                     <span className="text-primary">{featureIcons[feature]}</span>
                     <span className="text-sm">{featureLabels[feature]}</span>
@@ -247,9 +295,8 @@ const RoomDetailPage = () => {
               </div>
             </div>
 
-            {/* Amenities List */}
             <div>
-              <h3 className="font-semibold text-foreground mb-3">Включено</h3>
+              <h3 className="font-semibold text-foreground mb-3">{t("amenities.title")}</h3>
               <div className="grid grid-cols-2 gap-2">
                 {room.amenities.map((amenity) => (
                   <div key={amenity} className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -260,7 +307,6 @@ const RoomDetailPage = () => {
               </div>
             </div>
 
-            {/* Book Button */}
             <Link to={`/booking?room=${room.id}`}>
               <Button className="w-full btn-luxury h-12 text-base mt-4">
                 {t("booking.book_this_room")}

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
+/* ВОТ ЭТИ 3 СТРОКИ ОБЯЗАТЕЛЬНЫ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,7 +9,7 @@
   :root {
     /* Dark Red Brand Color Palette */
     --background: 0 0% 100%;
-    --foreground: 0 0% 20%;
+    --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 20%;
@@ -48,47 +49,15 @@
     --charcoal: 0 0% 20%;
     --charcoal-light: 0 0% 40%;
     
-    /* Lantern glow effect */
+    /* Lantern glow effect var */
     --lantern-glow: 25 75% 50%;
   }
 
   .dark {
     --background: 0 0% 8%;
     --foreground: 0 0% 95%;
-
-    --card: 0 0% 12%;
-    --card-foreground: 0 0% 95%;
-
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 95%;
-
+    /* ... остальные переменные темной темы, если нужны ... */
     --primary: 0 61% 40%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 95%;
-
-    --muted: 0 0% 18%;
-    --muted-foreground: 0 0% 65%;
-
-    --accent: 0 61% 40%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 62.8% 40%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 0 61% 40%;
-
-    --gold: 36 45% 50%;
-    --gold-light: 36 50% 65%;
-    --gold-dark: 36 40% 38%;
-    --beige: 30 10% 15%;
-    --beige-dark: 30 10% 12%;
-    --charcoal: 0 0% 90%;
-    --charcoal-light: 0 0% 70%;
-    
     --lantern-glow: 25 70% 45%;
   }
 }
@@ -101,13 +70,27 @@
   html {
     scroll-behavior: smooth;
   }
-
+  footer {
+    background-color: #000 !important; /* Принудительно черный фон */
+    color: hsl(var(--primary)) !important; /* Принудительно красный текст */
+  }
   body {
     @apply bg-background text-foreground font-sans antialiased relative;
-    background-color: hsl(30 20% 97%);
+    
+    /* Базовый цвет фона */
+    background-color: #fcfbf9; 
+    
+    /* ПОДКЛЮЧЕНИЕ ВАШЕЙ ТЕКСТУРЫ */
+    /* Убедитесь, что файл bg-pattern.jpg лежит в папке public */
+    background-image: url('/bg-pattern.jpg');
+    
+    /* Настройки повторения (как обои) */
+    background-repeat: repeat;
+    background-size: 400px auto; 
+    background-position: center top;
   }
 
-  /* Oriental lantern pattern overlay */
+  /* Легкий оверлей, чтобы текст читался лучше поверх узора */
   body::before {
     content: '';
     position: fixed;
@@ -117,13 +100,11 @@
     bottom: 0;
     pointer-events: none;
     z-index: 0;
-    /* Oriental ornament pattern - lanterns and geometric shapes */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%237f1d1d'%3E%3C!-- Lantern shape --%3E%3Cpath d='M60 10 L68 25 L65 25 L65 55 L72 65 L48 65 L55 55 L55 25 L52 25 Z' opacity='0.06'/%3E%3Cellipse cx='60' cy='8' rx='5' ry='3' opacity='0.06'/%3E%3Crect x='55' y='65' width='10' height='5' rx='2' opacity='0.06'/%3E%3C!-- Corner ornaments --%3E%3Ccircle cx='10' cy='10' r='4' opacity='0.04'/%3E%3Ccircle cx='110' cy='10' r='4' opacity='0.04'/%3E%3Ccircle cx='10' cy='110' r='4' opacity='0.04'/%3E%3Ccircle cx='110' cy='110' r='4' opacity='0.04'/%3E%3C!-- Diamond accents --%3E%3Cpath d='M60 85 L65 90 L60 95 L55 90 Z' opacity='0.04'/%3E%3C/g%3E%3C/svg%3E");
-    background-size: 120px 120px;
-    animation: pulse-glow 5s ease-in-out infinite;
+    /* Белый полупрозрачный слой поверх картинки */
+   /* background: rgba(255, 255, 255, 0.4); */
   }
 
-  /* Warm glow overlay */
+  /* Эффект "Души" (Живое свечение) */
   body::after {
     content: '';
     position: fixed;
@@ -134,10 +115,9 @@
     pointer-events: none;
     z-index: 0;
     background: 
-      radial-gradient(ellipse 600px 600px at 20% 20%, hsl(var(--lantern-glow) / 0.04) 0%, transparent 60%),
-      radial-gradient(ellipse 500px 500px at 80% 70%, hsl(var(--lantern-glow) / 0.03) 0%, transparent 60%),
-      radial-gradient(ellipse 400px 400px at 50% 90%, hsl(var(--lantern-glow) / 0.025) 0%, transparent 50%);
-    animation: pulse-glow 5s ease-in-out infinite reverse;
+      radial-gradient(circle 800px at 10% 20%, rgba(127, 29, 29, 0.03) 0%, transparent 40%),
+      radial-gradient(circle 600px at 90% 80%, rgba(212, 165, 116, 0.05) 0%, transparent 40%);
+    animation: soul-breathe 8s ease-in-out infinite;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -145,22 +125,14 @@
   }
 }
 
-@keyframes pulse-glow {
-  0%, 100% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
+@keyframes soul-breathe {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 @layer components {
   .glass {
     @apply bg-white/90 backdrop-blur-xl border border-white/30;
-  }
-
-  .glass-dark {
-    @apply bg-black/40 backdrop-blur-xl border border-white/10;
   }
 
   .text-gradient-gold {
@@ -181,16 +153,7 @@
   .section-padding {
     @apply py-20 md:py-28 px-6 md:px-12;
   }
-
-  .luxury-shadow {
-    @apply shadow-[0_8px_30px_rgb(0,0,0,0.06)];
-  }
-
-  .luxury-shadow-hover {
-    @apply hover:shadow-[0_20px_50px_rgb(0,0,0,0.1)] transition-shadow duration-500;
-  }
   
-  /* Card with subtle glow on hover */
   .card-glow {
     @apply transition-all duration-500;
   }
@@ -207,25 +170,16 @@
 
   .animate-fade-in {
     animation: fadeIn 0.6s ease-out forwards;
+    
   }
 
   @keyframes fadeUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }

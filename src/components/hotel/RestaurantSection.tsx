@@ -6,7 +6,7 @@ const RestaurantSection = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="restaurant" className="py-24 bg-beige">
+    <section id="restaurant" className="py-24">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Image */}

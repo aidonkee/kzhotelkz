@@ -1,6 +1,7 @@
 import { Users, Monitor, Volume2, Wifi, Thermometer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "react-router-dom"; // Добавили импорт Link
 
 const ConferenceSection = () => {
   const { t } = useLanguage();
@@ -13,7 +14,7 @@ const ConferenceSection = () => {
   ];
 
   return (
-    <section id="conference" className="py-24 bg-white">
+    <section id="conference" className="py-24">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
@@ -68,9 +69,12 @@ const ConferenceSection = () => {
               </div>
             </div>
 
-            <Button className="btn-luxury">
-              {t("conference.book")}
-            </Button>
+            {/* Кнопка с переходом на /booking */}
+            <Link to="/booking">
+              <Button className="btn-luxury">
+                {t("conference.book")}
+              </Button>
+            </Link>
           </div>
 
           {/* Image */}

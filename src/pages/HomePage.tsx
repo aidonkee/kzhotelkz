@@ -1,17 +1,19 @@
 import HeroSection from "@/components/hotel/HeroSection";
-import AboutSection from "@/components/hotel/AboutSection";
-import AmenitiesSection from "@/components/hotel/AmenitiesSection";
+
 import SportsTeamsSection from "@/components/hotel/SportsTeamsSection";
-import TestimonialsSection from "@/components/hotel/TestimonialsSection";
+import AboutAndAmenitiesSection from "@/components/hotel/AboutAndAmenitiesSection";
+import TourSection from "@/components/hotel/TourSection";
 
 const HomePage = () => {
   return (
     <>
       <HeroSection />
-      <AboutSection />
-      <AmenitiesSection />
+      <AboutAndAmenitiesSection />
+     
+      <TourSection />
+     
       <SportsTeamsSection />
-      <TestimonialsSection />
+     
     </>
   );
 };

@@ -36,7 +36,7 @@ const OfficesSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Features */}
           <div>
-            <div className="bg-white rounded-3xl p-8 shadow-soft">
+            <div className=" rounded-3xl p-8 shadow-soft">
               <div className="grid sm:grid-cols-2 gap-4">
                 {features.map((feature, index) => (
                   <div
@@ -69,7 +69,7 @@ const OfficesSection = () => {
               {sizes.map((size, index) => (
                 <div
                   key={index}
-                  className="bg-white rounded-2xl p-6 shadow-soft border border-transparent hover:border-gold/30 transition-all duration-300"
+                  className=" rounded-2xl p-6 shadow-soft border border-transparent hover:border-gold/30 transition-all duration-300"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
