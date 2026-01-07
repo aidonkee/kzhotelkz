@@ -26,10 +26,9 @@ const Navbar = () => {
     { href: "/rooms", label: t("nav.rooms") },
     { href: "/conference", label: t("nav.conference") },
     { href: "/contacts", label: t("nav.contacts") },
-    { href: "/news", label: t("nav.news") },
+    // Новости удалены отсюда
   ];
 
-  // ОБНОВЛЕННЫЙ МАССИВ ССЫЛОК С ПЕРЕВОДАМИ
   const servicesLinks = [
     { 
       href: "https://berlinrest.kz/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAb21jcAO30RBleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAadHslzv0OJe3UD18H7POmOZzVlKszTFqlMYPt_cCMH9RD3i70kc9BiXmv_Hmw_aem_z2PCOUQhuksW9rB6UGMfTg", 
@@ -45,7 +44,7 @@ const Navbar = () => {
     },
     { 
       href: "/services", 
-      label: t("nav.photoshoots"), // ИСПРАВЛЕНО: теперь берется из перевода
+      label: t("nav.photoshoots"),
       icon: Camera, 
       isExternal: false 
     },
@@ -101,11 +100,11 @@ const Navbar = () => {
         <Link to="/" className="flex items-center gap-2">
           <img 
             src="/logo.png" 
-            alt={t("hero.title")} // ИСПРАВЛЕНО: Alt текст логотипа
+            alt={t("hero.title")} 
             className="h-10 w-auto object-contain" 
           />
           <span className="font-serif text-xl lg:text-2xl font-semibold tracking-wide text-primary">
-            {t("hero.title")} {/* ИСПРАВЛЕНО: Текст логотипа теперь переводится */}
+            {t("hero.title")}
           </span>
         </Link>
 
@@ -128,7 +127,7 @@ const Navbar = () => {
           {/* Services Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium tracking-wide transition-colors duration-300 hover:text-primary text-muted-foreground outline-none">
-              {t("nav.amenities")}
+              Дополнительные услуги
               <ChevronDown className="w-3 h-3" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center" className="bg-white/95 backdrop-blur-md border-border min-w-[200px]">
@@ -193,7 +192,10 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="h-px bg-border my-2" />
-            <p className="text-xs text-muted-foreground font-medium">{t("nav.amenities")}</p>
+            {/* Исправлено название на Дополнительные услуги */}
+            <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
+              Дополнительные услуги
+            </p>
             {servicesLinks.map((link) => (
               <ServiceLinkItem 
                 key={link.href}

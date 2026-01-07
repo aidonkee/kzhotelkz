@@ -4,7 +4,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Building2, Users, Star, Trophy, 
   Wifi, Car, Utensils, Coffee,
-  Scissors, Tv, WashingMachine, Scale, Accessibility // Иконки для сервисов
+  Scissors, Tv, WashingMachine, Scale, Accessibility, // Иконки для сервисов
+  Flower2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -21,7 +22,7 @@ const HOTEL_SERVICES = [
 
 const PARTNER_SERVICES = [
   { icon: Scissors, label: "Парикмахерская" },
-  { icon: Accessibility, label: "Массаж" }, // Используем Accessibility как placeholder для массажа
+  { icon: Flower2, label: "Массаж" }, // Используем Accessibility как placeholder для массажа
   { icon: Scissors, label: "Барбершоп" },
   { icon: Scale, label: "Юридические услуги" },
   { icon: Car, label: "Заказ такси" },
@@ -29,14 +30,69 @@ const PARTNER_SERVICES = [
 ];
 
 // Компонент одной карточки услуги
+// Обновленная карточка с премиум-дизайном (Концепция: Стекло и Глубина)
+// Карточка в стиле iOS Glassmorphism (Frosted Glass)
 const ServiceCard = ({ icon: Icon, label }: { icon: any, label: string }) => (
-  <div className="flex flex-col items-center justify-center min-w-[160px] h-[160px] md:min-w-[200px] md:h-[200px] bg-white rounded-3xl border border-primary/10 mx-4 shadow-sm hover:shadow-lg hover:border-gold/30 hover:-translate-y-1 transition-all duration-300 group">
-    <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-      <Icon className="w-8 h-8 text-primary group-hover:text-white transition-colors" />
+    <div className="relative group mx-4 cursor-default py-6">
+      {/* Основной контейнер карточки */}
+      <div className="
+        flex flex-col items-center justify-center 
+        w-[180px] h-[180px] md:w-[220px] md:h-[220px]
+        
+        /* --- CORE IOS GLASS STYLES --- */
+        bg-white/30                       /* Сильная прозрачность (30%) */
+        backdrop-blur-2xl                 /* Максимальное размытие фона (эффект матового стекла) */
+        backdrop-saturate-150             /* Повышенная насыщенность (Vibrancy), как в iOS */
+        border border-white/40            /* Полупрозрачная белая граница */
+        shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] /* Специфичная мягкая тень для стекла */
+        
+        rounded-[2.5rem]                  /* Супер-скругленные углы (iOS style) */
+        
+        /* --- HOVER EFFECTS --- */
+        transition-all duration-500 ease-out
+        group-hover:-translate-y-2 
+        group-hover:bg-white/60           /* При наведении стекло становится 'плотнее' */
+        group-hover:border-white/80       /* Граница становится четче */
+        group-hover:shadow-[0_20px_50px_-10px_rgba(212,175,55,0.25)] /* Золотое свечение */
+      ">
+        
+        {/* Блик света (Gradient Overlay) для объема */}
+        <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-white/40 to-transparent pointer-events-none" />
+  
+        {/* Контейнер иконки (тоже стеклянный, но темнее) */}
+        <div className="
+          relative z-10
+          w-20 h-20 mb-5 
+          rounded-3xl                     /* Squircle форма (между кругом и квадратом) */
+          bg-white/40                     /* Стекло внутри стекла */
+          backdrop-blur-md
+          border border-white/50
+          flex items-center justify-center 
+          shadow-sm
+          transition-all duration-500 
+          group-hover:scale-110
+          group-hover:bg-gold           /* При наведении заливается золотом */
+          group-hover:border-gold
+          group-hover:shadow-md
+        ">
+          <Icon 
+            strokeWidth={1.5}
+            className="w-9 h-9 text-gray-700 transition-colors duration-500 group-hover:text-white" 
+          />
+        </div>
+  
+        {/* Текст */}
+        <span className="
+          relative z-10 
+          font-serif font-bold tracking-wide text-base text-center text-gray-800 
+          group-hover:text-black transition-colors duration-300
+          px-4 leading-tight drop-shadow-sm
+        ">
+          {label}
+        </span>
+      </div>
     </div>
-    <span className="font-serif font-bold text-center text-primary px-2">{label}</span>
-  </div>
-);
+  );
 
 // Компонент Бегущей строки
 const Marquee = ({ children, direction = "left", speed = 20 }: { children: React.ReactNode, direction?: "left" | "right", speed?: number }) => {

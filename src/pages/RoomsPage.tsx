@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { 
-  ChevronRight, Users, CigaretteOff 
+  ChevronRight, Users, CigaretteOff
 } from "lucide-react";
 
 // --- Компонент Карусели ---
@@ -41,14 +41,15 @@ const RoomListCarousel = ({ images, alt }: { images: string[], alt: string }) =>
         </div>
       )}
       
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+      {/* Тень внутри карусели */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
 
       {images.length > 1 && (
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
           {images.map((_, idx) => (
             <div 
               key={idx} 
-              className={`w-2 h-2 rounded-full transition-all duration-300 shadow-sm ${idx === currentIndex ? "bg-white w-4" : "bg-white/50 hover:bg-white/80"}`}
+              className={`w-2 h-2 rounded-full transition-all duration-300 shadow-sm ${idx === currentIndex ? "bg-white w-5" : "bg-white/50 hover:bg-white/80"}`}
             />
           ))}
         </div>
@@ -60,7 +61,6 @@ const RoomListCarousel = ({ images, alt }: { images: string[], alt: string }) =>
 const RoomsPage = () => {
   const { t } = useLanguage();
 
-  // --- ДАННЫЕ НОМЕРОВ ---
   const roomCategories = [
     {
       id: "family",
@@ -100,7 +100,7 @@ const RoomsPage = () => {
     {
       id: "econom-plus",
       title: "Эконом + (ECONOM+)",
-      badge: "",
+      badge: "Хит",
       coverImages: ["/2-place-econom+/picture-1.jpg", "/1-place-econom+/picture-1.jpg"],
       description: "Уютные номера со свежим ремонтом.",
       rooms: [
@@ -112,42 +112,62 @@ const RoomsPage = () => {
     },
     {
       id: "standard",
-      title: "Стандарт / Эконом",
-      badge: "Выгодно",
-      coverImages: ["/one-place-standart/picture-1.jpg", "/1-place-econom/picture-1.jpg"],
-      description: "Классические номера для командировок.",
+      title: "Стандарт (STANDARD)",
+      badge: "Бизнес",
+      coverImages: ["/one-place-standart/picture-1.jpg"],
+      description: "Классические номера, идеально подходящие для командировок.",
       rooms: [
-        { id: "single-econom-wide", name: "ЭКОНОМ ОДНОМЕСТНЫЙ (ШИР. КРОВАТЬ)", price: "9 000", capacity: "1 чел.", link: "/room/single-econom-wide" },
-        { id: "double-econom", name: "ЭКОНОМ 2-Х МЕСТНЫЙ", price: "12 000", capacity: "2 чел.", link: "/room/double-econom" },
-        { id: "single-standard", name: "СТАНДАРТ ОДНОМЕСТНЫЙ", price: "17 000", capacity: "1 чел.", link: "/room/single-standard" },
+        { id: "single-standard", name: "СТАНДАРТ 1 МЕСТНЫЙ", price: "17 000", capacity: "1 чел.", link: "/room/single-standard" },
         { id: "double-standard", name: "СТАНДАРТ 2-Х МЕСТНЫЙ", price: "27 000", capacity: "2 чел.", link: "/room/double-standard" }
+      ]
+    },
+    {
+      id: "econom",
+      title: "Эконом (ECONOMY)",
+      badge: "Выгодно",
+      coverImages: ["/1-place-econom/picture-1.jpg"],
+      description: "Базовое размещение по самым доступным ценам.",
+      rooms: [
+        { id: "econom-1", name: "ЭКОНОМ 1-О МЕСТНЫЙ", price: "12 000", capacity: "1 чел.", link: "/room/econom-1" },
+        { id: "econom-1-large", name: "ОДНОМЕСТНЫЙ ЭКОНОМ (БОЛ. КРОВАТЬ)", price: "20 000", capacity: "1 чел.", link: "/room/econom-1-large" },
+        { id: "econom-2", name: "ЭКОНОМ 2-Х МЕСТНЫЙ", price: "20 000", capacity: "2 чел.", link: "/room/econom-2" },
+        { id: "econom-3", name: "ЭКОНОМ 3-Х МЕСТНЫЙ", price: "30 000", capacity: "3 чел.", link: "/room/econom-3" },
+        { id: "econom-4", name: "ЭКОНОМ 4-Х МЕСТНЫЙ", price: "40 000", capacity: "4 чел.", link: "/room/econom-4" }
       ]
     }
   ];
 
   return (
-    <div className="min-h-screen pt-[100px] relative z-10 bg-[#FAFAFA]">
+    // ГЛАВНОЕ: Убрал все фоны (bg-...), оставил только отступы. 
+    // Фон теперь тянется из index.css (body)
+    <div className="min-h-screen pt-24 pb-16 relative z-10">
       
-      <div className="container mx-auto px-4 md:px-6 pb-12 max-w-6xl">
+      <div className="container mx-auto px-4 md:px-6 max-w-6xl">
         
-        {/* --- КОМПАКТНЫЙ БЛОК ПРЕДУПРЕЖДЕНИЯ (NO SMOKING) --- */}
-        <div className="max-w-3xl mx-auto mb-16 relative overflow-hidden rounded-2xl bg-white/80 backdrop-blur-sm border border-red-100 shadow-sm p-4 md:p-5 flex items-center gap-5 group hover:shadow-md transition-all">
-            
-            {/* Легкое свечение фона */}
-            <div className="absolute -left-6 -top-6 w-24 h-24 bg-red-50 rounded-full blur-xl opacity-60"></div>
+        {/* ЗАГОЛОВОК СТРАНИЦЫ */}
+        <div className="text-center mb-16">
+          <div className="inline-block p-4 rounded-3xl backdrop-blur-sm">
+            <h1 className="font-serif text-4xl md:text-6xl font-bold text-primary mb-4">
+              Номера и цены
+            </h1>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Комфортное проживание в центре Петропавловска.
+            </p>
+          </div>
+        </div>
 
-            {/* Иконка */}
+        {/* --- NO SMOKING --- */}
+        <div className="max-w-3xl mx-auto mb-16 relative overflow-hidden rounded-2xl bg-white/70 backdrop-blur-md border border-red-100 shadow-sm p-4 md:p-5 flex items-center gap-5 group hover:shadow-lg hover:shadow-red-500/5 transition-all duration-300">
+            <div className="absolute -left-6 -top-6 w-24 h-24 bg-red-50 rounded-full blur-xl opacity-60"></div>
             <div className="relative z-10 flex-shrink-0 w-12 h-12 rounded-full bg-red-50 flex items-center justify-center border border-red-100 text-red-900/80 group-hover:scale-105 transition-transform">
                 <CigaretteOff className="w-5 h-5" />
             </div>
-
-            {/* Текст */}
             <div className="relative z-10 flex-grow">
                 <h3 className="font-serif font-bold text-primary text-lg uppercase tracking-wide flex items-center gap-2">
                    Территория без дыма
                 </h3>
                 <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                   Курение в номерах <span className="text-red-800 font-medium">запрещено</span>. Для вашего удобства на территории есть оборудованная зона.
+                   Курение в номерах <span className="text-red-800 font-medium">запрещено</span>.
                 </p>
             </div>
         </div>
@@ -158,27 +178,26 @@ const RoomsPage = () => {
             <section 
               key={category.id} 
               id={category.id} 
-              className="scroll-mt-40 bg-white rounded-[3rem] p-6 md:p-8 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] border border-gray-100"
+              // Стеклянный эффект для карточек (white/80) чтобы просвечивал фон
+              className="bg-white/80 backdrop-blur-md rounded-[2.5rem] p-6 md:p-8 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-white/60 hover:border-gold/20 transition-all duration-500 group"
             >
               <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
                 
-                {/* ЛЕВАЯ КОЛОНКА: ФОТО */}
+                {/* ФОТО */}
                 <div className="w-full lg:w-5/12 xl:w-4/12 flex-shrink-0">
                    <RoomListCarousel images={category.coverImages} alt={category.title} />
                    
                    <div className="lg:hidden mt-6 text-center">
                       <h2 className="font-serif text-2xl font-bold text-primary uppercase">{category.title}</h2>
-                      <p className="text-muted-foreground text-sm mt-2">{category.description}</p>
                    </div>
                 </div>
 
-                {/* ПРАВАЯ КОЛОНКА: СПИСОК НОМЕРОВ */}
+                {/* ИНФОРМАЦИЯ */}
                 <div className="w-full lg:w-7/12 xl:w-8/12 flex flex-col justify-center">
                   
-                  {/* Заголовок категории (Desktop) */}
-                  <div className="hidden lg:block mb-8 border-b border-gray-100 pb-4">
+                  <div className="hidden lg:block mb-8 border-b border-gray-100/50 pb-4">
                     <div className="flex items-center gap-4 mb-2">
-                       <h2 className="font-serif text-3xl font-bold text-primary uppercase tracking-wide">
+                       <h2 className="font-serif text-3xl font-bold text-primary uppercase tracking-wide group-hover:text-gold transition-colors duration-300">
                         {category.title}
                        </h2>
                        {category.badge && (
@@ -192,51 +211,46 @@ const RoomsPage = () => {
                     </p>
                   </div>
 
-                  {/* ТАБЛИЦА ЦЕН */}
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     {category.rooms.map((room) => (
-                      <div key={room.id} className="group">
+                      <div key={room.id} className="relative p-4 rounded-2xl hover:bg-white/60 transition-colors duration-300 border border-transparent hover:border-gray-100/50">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
                           
-                          {/* Название + Точки */}
-                          <div className="flex-grow flex items-baseline overflow-hidden">
-                            <h3 className="text-base md:text-lg font-bold text-gray-800 uppercase tracking-tight flex-shrink-0 group-hover:text-gold transition-colors">
+                          <div className="flex-grow">
+                            <h3 className="text-base md:text-lg font-bold text-gray-800 uppercase tracking-tight">
                               {room.name}
                             </h3>
-                            <div className="hidden md:block flex-grow border-b-2 border-dotted border-gray-300 mx-4 relative -top-1 opacity-50"></div>
+                            <div className="md:hidden text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                              <Users className="w-3 h-3" /> {room.capacity}
+                            </div>
                           </div>
 
-                          {/* Цена + Кнопки */}
-                          <div className="flex items-center justify-between md:justify-end gap-6 flex-shrink-0">
+                          <div className="flex items-center justify-between md:justify-end gap-6 flex-shrink-0 mt-2 md:mt-0">
                             
-                            <div className="text-right">
+                            <div className="text-right min-w-[100px]">
                                <span className="block text-xl md:text-2xl font-bold text-primary whitespace-nowrap">
                                  {room.price} ₸
                                </span>
                                <span className="text-xs text-muted-foreground hidden md:block">
-                                 за ночь / {room.capacity}
+                                 {room.capacity}
                                </span>
                             </div>
 
                             <div className="flex items-center gap-2">
                               <Link to={room.link}>
-                                <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full bg-gray-50 hover:bg-gold/10 text-gray-500 hover:text-gold border border-gray-200 hover:border-gold/30 transition-all">
+                                <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full bg-white/80 hover:bg-gold/10 text-gray-400 hover:text-gold border border-gray-200 hover:border-gold/30 transition-all shadow-sm">
                                   <ChevronRight className="w-5 h-5" />
                                 </Button>
                               </Link>
 
                               <Link to="/rates">
                                 <Button className="btn-luxury h-10 px-6 rounded-full text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg">
-                                  {t("nav.book")}
+                                   {t("nav.book")}
                                 </Button>
                               </Link>
                             </div>
 
                           </div>
-                        </div>
-                        
-                        <div className="md:hidden text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                          <Users className="w-3 h-3" /> {room.capacity}
                         </div>
                       </div>
                     ))}
