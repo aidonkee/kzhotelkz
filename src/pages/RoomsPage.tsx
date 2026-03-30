@@ -57,6 +57,7 @@ const RoomListCarousel = ({
               key={index}
               src={src}
               alt={`${alt} ${index + 1}`}
+              loading="lazy"
               className="h-full w-full object-cover flex-shrink-0"
               onError={(e) => {
                 e.currentTarget.src =

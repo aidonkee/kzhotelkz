@@ -37,9 +37,9 @@ const BookingPage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const heroImages = [
     "/view.jpg",
-    "/view2.png",
-    "/image copy 18.png",
-    "/image copy 19.png",
+    "/view2.jpg",
+    "/image copy 18.jpg",
+    "/image copy 19.jpg",
   ];
 
   useEffect(() => {

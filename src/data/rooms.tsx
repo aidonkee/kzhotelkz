@@ -225,13 +225,13 @@ export const ROOMS_DATA: Record<string, RoomData> = {
         name: { ru: "ЛЮКС 317", kz: "ЛЮКС 317", en: "LUX 317", zh: "豪华房 317", az: "LÜKS 317" },
         price: "35 000",
         images: [
-            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.07.png",
-            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.19.png",
-            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.27.png",
-            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.35.png",
-            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.44.png",
-            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.53.png",
-            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.28.00.png"
+            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.07.jpg",
+            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.19.jpg",
+            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.27.jpg",
+            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.35.jpg",
+            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.44.jpg",
+            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.53.jpg",
+            "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.28.00.jpg"
         ],
         amenityKeys: ["twoRooms", "bathroom", "doubleBed", "tv", "phone", "fridge", "kettle", "hairDryer"],
         descriptionCategory: "lux"

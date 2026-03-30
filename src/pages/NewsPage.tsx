@@ -92,6 +92,7 @@ const NewsPage = () => {
                   <img
                     src={item.image}
                     alt={t(item.titleKey)}
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   {item.category === 'video' && (

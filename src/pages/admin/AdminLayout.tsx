@@ -7,11 +7,13 @@ const AdminLayout = () => {
     const { isAdmin, logout } = useAdmin();
     const location = useLocation();
 
-    if (!isAdmin && location.pathname !== "/admin") {
+    const isLoginPage = location.pathname === "/admin" || location.pathname === "/admin/";
+
+    if (!isAdmin && !isLoginPage) {
         return <Navigate to="/admin" replace />;
     }
 
-    if (isAdmin && location.pathname === "/admin") {
+    if (isAdmin && isLoginPage) {
         return <Navigate to="/admin/dashboard" replace />;
     }
 

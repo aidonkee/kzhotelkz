@@ -53,8 +53,8 @@ const HeroSection = () => {
   const [guests, setGuests] = useState("");
 
   const heroImages = [
-    "/view-5.png",
-    "/view-4.png",
+    "/view-5.jpg",
+    "/view-4.jpg",
     "/kyzylzharNomera/reception/IMG_9899.jpg",
     "/reception-new.jpeg",
     "/kyzylzharNomera/reception/IMG_9921.jpg",

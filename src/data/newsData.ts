@@ -70,12 +70,12 @@ export const newsData: NewsItem[] = [
     description: "Уникальное сочетание современного комфорта и традиционного гостеприимства.",
     date: "2020-08-24",
     category: "hotel",
-    image: "/image copy 29.png",
+    image: "/image copy 29.jpg",
     content: `
         <p class="text-lg mb-4 ">Наш отель — это идеальное место как для деловых поездок, так и для семейного отдыха.</p>
          <div class="rounded-2xl overflow-hidden shadow-xl mb-8 border border-gray-200">
           <video controls class="w-full h-full object-cover aspect-video" preload="metadata" playsinline
-          poster="/image copy 29.png">
+          poster="/image copy 29.jpg">
             <source src="/1.mp4" type="video/mp4">
             Ваш браузер не поддерживает встроенные видео.
           </video>
@@ -90,13 +90,13 @@ export const newsData: NewsItem[] = [
     description: "Мы создаем условия, в которых каждый гость чувствует себя как дома.",
     date: "2020-08-24",
     category: "hotel",
-    image: "/image copy 28.png",
+    image: "/image copy 28.jpg",
     content: `
         <p class="mb-6">Персонал гостиничного комплекса «Кызыл Жар» делает всё возможное, чтобы ваше пребывание было незабываемым.</p>
         
         <div class="rounded-2xl overflow-hidden shadow-xl mb-8 border border-gray-200">
           <video controls class="w-full h-full object-cover aspect-video" preload="metadata" playsinline
-          poster="/image copy 28.png">
+          poster="/image copy 28.jpg">
             <source src="/2.mp4" type="video/mp4">
             Ваш браузер не поддерживает встроенные видео.
           </video>
@@ -112,62 +112,62 @@ export const newsData: NewsItem[] = [
     description: "Взгляните на наш отель по-новому. Обновленная галерея интерьеров холла и номеров.",
     date: "2020-08-24",
     category: "events",
-    image: "/image copy 19.png",
+    image: "/image copy 19.jpg",
     content: `
         <p class="mb-8 text-lg font-medium">Спешим поделиться прекрасной новостью: мы провели новую фотосессию нашего гостиничного комплекса!</p>
         
       
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
           <div class="overflow-hidden rounded-xl shadow-md h-48 group">
-            <img src="/image copy 14.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Коридор 1">
+            <img src="/image copy 14.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Коридор 1">
           </div>
           <div class="overflow-hidden rounded-xl shadow-md h-48 group">
-            <img src="/image copy 15.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Коридор 2">
+            <img src="/image copy 15.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Коридор 2">
           </div>
           <div class="overflow-hidden rounded-xl shadow-md h-48 group">
-            <img src="/image copy 16.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Коридор 3">
+            <img src="/image copy 16.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Коридор 3">
           </div>
         </div>
         
         <h3 class="text-xl font-serif font-bold mb-4 border-l-4 border-gold pl-3">Холл, первый этаж:</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
           <div class="overflow-hidden rounded-xl shadow-md h-64 group">
-            <img src="/image copy 17.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Ресепшн">
+            <img src="/image copy 17.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Ресепшн">
           </div>
           <div class="overflow-hidden rounded-xl shadow-md h-64 group">
-            <img src="/image copy 18.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Холл">
+            <img src="/image copy 18.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Холл">
           </div>
           <div class="overflow-hidden rounded-xl shadow-md h-64 group">
-            <img src="/image copy 19.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Лобби детали">
+            <img src="/image copy 19.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Лобби детали">
           </div>
           <div class="overflow-hidden rounded-xl shadow-md h-64 group">
-            <img src="/image copy 20.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Интерьер">
+            <img src="/image copy 20.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Интерьер">
           </div>
         </div>
   
         <h3 class="text-xl font-serif font-bold mb-4 border-l-4 border-gold pl-3">Холл, третий этаж:</h3>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div class="overflow-hidden rounded-xl shadow-md aspect-[3/4] group">
-            <img src="/image copy 21.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Картина 1">
+            <img src="/image copy 21.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Картина 1">
           </div>
           <div class="overflow-hidden rounded-xl shadow-md aspect-[3/4] group">
-            <img src="/image copy 22.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Картина 2">
+            <img src="/image copy 22.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Картина 2">
           </div>
           <div class="overflow-hidden rounded-xl shadow-md aspect-[3/4] group">
-            <img src="/image copy 23.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Растение">
+            <img src="/image copy 23.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Растение">
           </div>
           <div class="overflow-hidden rounded-xl shadow-md aspect-[3/4] group">
-            <img src="/image copy 24.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Картина 3">
+            <img src="/image copy 24.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Картина 3">
           </div>
       
           <div class="overflow-hidden rounded-xl shadow-md aspect-[3/4] group">
-            <img src="/image copy 25.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Картина 4">
+            <img src="/image copy 25.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Картина 4">
           </div>
           <div class="overflow-hidden rounded-xl shadow-md aspect-[3/4] group">
-            <img src="/image copy 26.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Коридор 3 этаж">
+            <img src="/image copy 26.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Коридор 3 этаж">
           </div>
           <div class="overflow-hidden rounded-xl shadow-md aspect-[3/4] group">
-            <img src="/image copy 27.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Коридор 3 этаж">
+            <img src="/image copy 27.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Коридор 3 этаж">
           </div>
         </div>
       `
