@@ -211,7 +211,7 @@ const RoomsPage = () => {
                     <div>
                       <div className="flex justify-between items-start gap-4 mb-4">
                         <div>
-                          <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary mb-2 leading-tight">
+                          <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary mb-2 leading-tight lining-nums">
                             {title}
                           </h2>
                           <p className="font-serif text-muted-foreground text-sm md:text-base italic mb-4">
@@ -219,7 +219,7 @@ const RoomsPage = () => {
                           </p>
                         </div>
                         <div className="text-right flex-shrink-0">
-                          <div className="font-serif text-2xl md:text-3xl font-bold text-primary">
+                          <div className="font-serif text-2xl md:text-3xl font-bold text-primary lining-nums">
                             {room.price} <span className="text-sm text-primary/70">₸</span>
                           </div>
                         </div>

@@ -239,7 +239,7 @@ const RoomDetailPage = () => {
             {/* ИНФОРМАЦИЯ */}
             <div className="w-full lg:w-1/2 flex flex-col">
               <div className="border-b border-primary/10 pb-6 mb-6">
-                <h1 className="font-serif text-3xl md:text-4xl font-bold text-primary mb-3 uppercase">
+                <h1 className="font-serif text-3xl md:text-4xl font-bold text-primary mb-3 uppercase lining-nums">
                   {currentRoomName}
                 </h1>
               </div>
@@ -266,7 +266,7 @@ const RoomDetailPage = () => {
                     <p className="text-xs font-serif text-muted-foreground uppercase tracking-widest mb-1 font-bold">
                       <CheckCircle2 className="w-3 h-3 inline mr-1" /> {localT.priceLabel}
                     </p>
-                    <p className="font-serif text-4xl font-bold text-primary">
+                    <p className="font-serif text-4xl font-bold text-primary lining-nums">
                       {room.price} <span className="text-2xl text-primary/70">₸</span>
                     </p>
                   </div>
