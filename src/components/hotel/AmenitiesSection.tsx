@@ -39,12 +39,6 @@ const AmenitiesSection = () => {
       image: "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=800&q=80", // Бассейн
     },
     {
-      icon: Bath,
-      titleKey: "amenities.spa",
-      descriptionKey: "amenities.spa.desc",
-      image: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=800&q=80", // СПА
-    },
-    {
       icon: Coffee,
       titleKey: "amenities.coffee",
       descriptionKey: "amenities.coffee.desc",
@@ -81,20 +75,20 @@ const AmenitiesSection = () => {
               {t("amenities.subtitle")}
             </h2>
           </div>
-          
+
           {/* Кнопки навигации (видны только на десктопе, на мобилке свайп) */}
           <div className="hidden md:flex gap-4">
-            <Button 
-              variant="outline" 
-              size="icon" 
+            <Button
+              variant="outline"
+              size="icon"
               onClick={() => scroll("left")}
               className="rounded-full border-primary/20 hover:bg-primary hover:text-white transition-colors h-12 w-12"
             >
               <ChevronLeft className="w-5 h-5" />
             </Button>
-            <Button 
-              variant="outline" 
-              size="icon" 
+            <Button
+              variant="outline"
+              size="icon"
               onClick={() => scroll("right")}
               className="rounded-full border-primary/20 hover:bg-primary hover:text-white transition-colors h-12 w-12"
             >
@@ -104,7 +98,7 @@ const AmenitiesSection = () => {
         </div>
 
         {/* Carousel Container */}
-        <div 
+        <div
           ref={scrollContainerRef}
           className="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory hide-scrollbar"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }} // Скрываем скроллбар
@@ -116,9 +110,9 @@ const AmenitiesSection = () => {
             >
               {/* Image */}
               <div className="h-64 w-full overflow-hidden">
-                <img 
-                  src={amenity.image} 
-                  alt={t(amenity.titleKey)} 
+                <img
+                  src={amenity.image}
+                  alt={t(amenity.titleKey)}
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 {/* Overlay gradient */}

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -15,7 +16,7 @@ export default {
     extend: {
       fontFamily: {
         serif: ["Playfair Display", "Georgia", "serif"],
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["Montserrat", "Inter", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -35,8 +36,8 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
+        muted:  {
+          DEFAULT:  "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
@@ -73,14 +74,14 @@ export default {
         "2xl": "calc(var(--radius) + 8px)",
         "3xl": "calc(var(--radius) + 16px)",
       },
-      keyframes: {
+      keyframes:  {
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          to:  { height: "0" },
         },
         "fade-up": {
           from: { opacity: "0", transform: "translateY(30px)" },
@@ -88,7 +89,7 @@ export default {
         },
         "fade-in": {
           from: { opacity: "0" },
-          to: { opacity: "1" },
+          to:  { opacity: "1" },
         },
         "slide-in-right": {
           from: { transform: "translateX(100%)" },
@@ -107,7 +108,12 @@ export default {
         "slide-in-right": "slide-in-right 0.3s ease-out",
         float: "float 6s ease-in-out infinite",
       },
+      // Добавляем для больших экранов
+      screens: {
+        'xs': '475px',
+        '3xl': '1920px',
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindAnimate],
 } satisfies Config;

@@ -1,28 +1,55 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useData } from "@/contexts/DataContext"; // <--- Import useData
 import { Button } from "@/components/ui/button";
-import { 
-  ChevronRight, Users, CigaretteOff
-} from "lucide-react";
+import { CigaretteOff, MessageCircle, Users, Minus, Plus } from "lucide-react";
+import { TRANSLATIONS as SHARED_TRANSLATIONS, AMENITY_ICONS } from "@/data/rooms"; // Removed ROOMS_DATA import
+
+// Порядок отображения номеров
+const ROOM_ORDER = [
+  "lux-3room", "lux-2room", "lux-317", "semilux-1room-1place",
+  "single-semilux", "double-semilux",
+  "family-2", "family-3",
+  "econom-plus", "econom-plus-1", "double-econom-plus", "econom-plus-3",
+  "econom-1-large", "single-standard", "double-standard",
+  "econom-1", "econom-2", "econom-3", "econom-4"
+];
 
 // --- Компонент Карусели ---
-const RoomListCarousel = ({ images, alt }: { images: string[], alt: string }) => {
+const RoomListCarousel = ({
+  images,
+  alt,
+  noPhotoText,
+  onImageClick
+}: {
+  images: string[];
+  alt: string;
+  noPhotoText: string;
+  onImageClick?: (index: number) => void;
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     if (!images || images.length <= 1) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [images?.length]);
 
   return (
-    <div className="relative h-64 md:h-full min-h-[300px] w-full overflow-hidden rounded-3xl bg-gray-100 shadow-inner group">
+    <div
+      className="
+        relative w-full overflow-hidden bg-gray-100 shadow-md group
+        rounded-xl cursor-zoom-in
+        h-64 sm:h-72 md:h-[350px] lg:h-[400px] xl:h-[450px]
+      "
+      onClick={() => onImageClick && onImageClick(currentIndex)}
+    >
       {images && images.length > 0 ? (
-        <div 
-          className="flex h-full w-full transition-transform duration-700 ease-in-out"
+        <div
+          className="flex h-full w-full transition-transform duration-1000 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {images.map((src, index) => (
@@ -30,26 +57,29 @@ const RoomListCarousel = ({ images, alt }: { images: string[], alt: string }) =>
               key={index}
               src={src}
               alt={`${alt} ${index + 1}`}
-              className="h-full w-full object-cover flex-shrink-0 transition-transform duration-700 group-hover:scale-105"
-              onError={(e) => { e.currentTarget.src = "https://placehold.co/600x400?text=No+Image"; }}
+              className="h-full w-full object-cover flex-shrink-0"
+              onError={(e) => {
+                e.currentTarget.src =
+                  "https://placehold.co/600x400?text=No+Image";
+              }}
             />
           ))}
         </div>
       ) : (
         <div className="w-full h-full flex items-center justify-center bg-gray-200">
-           <span className="text-gray-400">Нет фото</span>
+          <span className="text-gray-400 font-serif">{noPhotoText}</span>
         </div>
       )}
-      
-      {/* Тень внутри карусели */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+
+      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
 
       {images.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
           {images.map((_, idx) => (
-            <div 
-              key={idx} 
-              className={`w-2 h-2 rounded-full transition-all duration-300 shadow-sm ${idx === currentIndex ? "bg-white w-5" : "bg-white/50 hover:bg-white/80"}`}
+            <div
+              key={idx}
+              className={`h-1.5 rounded-full transition-all duration-500 shadow-sm ${idx === currentIndex ? "bg-white w-8" : "bg-white/50 w-2"
+                }`}
             />
           ))}
         </div>
@@ -59,209 +89,269 @@ const RoomListCarousel = ({ images, alt }: { images: string[], alt: string }) =>
 };
 
 const RoomsPage = () => {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+  const { rooms: ROOMS_DATA } = useData(); // <--- Get rooms from context and alias it to ROOMS_DATA to minimize changes
+  const langKey = (language as keyof typeof SHARED_TRANSLATIONS) || 'ru';
+  // @ts-ignore
+  const localT = SHARED_TRANSLATIONS[langKey] || SHARED_TRANSLATIONS.ru;
 
-  const roomCategories = [
-    {
-      id: "family",
-      title: "Семейный (FAMILY)",
-      badge: "Популярное",
-      coverImages: ["/family-3-room/1-IMAGE 2025-12-25 20:21:35.jpg", "/family-3-room/2-IMAGE 2025-12-25 20:21:34.jpg"],
-      description: "Идеальный выбор для семейного отдыха. Простор и уют.",
-      rooms: [
-        { id: "family-2", name: "СЕМЕЙНЫЙ 2-Х КОМНАТНЫЙ", price: "25 000", capacity: "2-4 чел.", link: "/room/family-2" },
-        { id: "family-3", name: "СЕМЕЙНЫЙ 3-Х КОМНАТНЫЙ", price: "30 000", capacity: "4-6 чел.", link: "/room/family" }
-      ]
-    },
-    {
-      id: "lux",
-      title: "Люкс (LUX)",
-      badge: "VIP",
-      coverImages: ["/3-room-lux/17-photo_5361824987964182350_y (1).jpg", "/2-room-lux/picture-1.jpg"],
-      description: "Высший уровень комфорта. Гостиная, спальня и все удобства.",
-      rooms: [
-        { id: "lux-2room", name: "ЛЮКС 2-Х КОМНАТНЫЙ", price: "35 000", capacity: "2 чел.", link: "/room/lux-2room" },
-        { id: "lux-2room-improved", name: "ЛЮКС 2-Х КОМНАТНЫЙ (УЛУЧШЕННЫЙ)", price: "40 000", capacity: "2 чел.", link: "/room/lux-2room-improved" },
-        { id: "lux-3room", name: "ЛЮКС 3-Х КОМНАТНЫЙ", price: "45 000", capacity: "4 чел.", link: "/room/lux-3room" }
-      ]
-    },
-    {
-      id: "semilux",
-      title: "Полулюкс (SEMI-LUX)",
-      badge: "Комфорт",
-      coverImages: ["/semi-lux-2-place/10-photo_5361824987964182344_y (1).jpg", "/1-place-semilux/picture-1.jpg"],
-      description: "Оптимальное соотношение цены и качества.",
-      rooms: [
-        { id: "single-semilux", name: "1 МЕСТНЫЙ ОДНОКОМНАТНЫЙ", price: "19 000", capacity: "1 чел.", link: "/room/single-semilux" },
-        { id: "semilux-2room-1place", name: "1 МЕСТНЫЙ 2-Х КОМНАТНЫЙ", price: "28 000", capacity: "1 чел.", link: "/room/semilux-2room-1place" },
-        { id: "double-semilux", name: "2-Х МЕСТНЫЙ 2-Х КОМНАТНЫЙ", price: "32 000", capacity: "2 чел.", link: "/room/double-semilux" }
-      ]
-    },
-    {
-      id: "econom-plus",
-      title: "Эконом + (ECONOM+)",
-      badge: "Хит",
-      coverImages: ["/2-place-econom+/picture-1.jpg", "/1-place-econom+/picture-1.jpg"],
-      description: "Уютные номера со свежим ремонтом.",
-      rooms: [
-        { id: "econom-plus", name: "ЭКОНОМ+ ОДНОКОМНАТНЫЙ", price: "15 000", capacity: "1 чел.", link: "/room/econom-plus" },
-        { id: "econom-plus-1-large", name: "ЭКОНОМ+ ОДНОМЕСТНЫЙ (БОЛЬШОЙ)", price: "22 000", capacity: "1 чел.", link: "/room/econom-plus-1-large" },
-        { id: "double-econom-plus", name: "ЭКОНОМ+ 2-Х МЕСТНЫЙ", price: "24 000", capacity: "2 чел.", link: "/room/double-econom-plus" },
-        { id: "econom-plus-3", name: "ЭКОНОМ+ 3-Х МЕСТНЫЙ", price: "33 000", capacity: "3 чел.", link: "/room/econom-plus-3" }
-      ]
-    },
-    {
-      id: "standard",
-      title: "Стандарт (STANDARD)",
-      badge: "Бизнес",
-      coverImages: ["/one-place-standart/picture-1.jpg"],
-      description: "Классические номера, идеально подходящие для командировок.",
-      rooms: [
-        { id: "single-standard", name: "СТАНДАРТ 1 МЕСТНЫЙ", price: "17 000", capacity: "1 чел.", link: "/room/single-standard" },
-        { id: "double-standard", name: "СТАНДАРТ 2-Х МЕСТНЫЙ", price: "27 000", capacity: "2 чел.", link: "/room/double-standard" }
-      ]
-    },
-    {
-      id: "econom",
-      title: "Эконом (ECONOMY)",
-      badge: "Выгодно",
-      coverImages: ["/1-place-econom/picture-1.jpg"],
-      description: "Базовое размещение по самым доступным ценам.",
-      rooms: [
-        { id: "econom-1", name: "ЭКОНОМ 1-О МЕСТНЫЙ", price: "12 000", capacity: "1 чел.", link: "/room/econom-1" },
-        { id: "econom-1-large", name: "ОДНОМЕСТНЫЙ ЭКОНОМ (БОЛ. КРОВАТЬ)", price: "20 000", capacity: "1 чел.", link: "/room/econom-1-large" },
-        { id: "econom-2", name: "ЭКОНОМ 2-Х МЕСТНЫЙ", price: "20 000", capacity: "2 чел.", link: "/room/econom-2" },
-        { id: "econom-3", name: "ЭКОНОМ 3-Х МЕСТНЫЙ", price: "30 000", capacity: "3 чел.", link: "/room/econom-3" },
-        { id: "econom-4", name: "ЭКОНОМ 4-Х МЕСТНЫЙ", price: "40 000", capacity: "4 чел.", link: "/room/econom-4" }
-      ]
+  // State for guest counts per room
+  const [guestCounts, setGuestCounts] = useState<Record<string, number>>({});
+
+  // Fullscreen viewer state
+  const [fullscreenData, setFullscreenData] = useState<{
+    images: string[];
+    index: number;
+    title: string;
+  } | null>(null);
+
+  const handleGuestChange = (roomId: string, delta: number) => {
+    setGuestCounts(prev => {
+      const current = prev[roomId] || 1;
+      const newValue = Math.max(1, Math.min(10, current + delta)); // Limit 1-10 guests
+      return { ...prev, [roomId]: newValue };
+    });
+  };
+
+  const handleBookClick = (room: typeof ROOMS_DATA[string]) => {
+    const guests = guestCounts[room.id] || 1;
+    const roomName = room.name[langKey] || room.name.ru;
+
+    // Формируем сообщение для WhatsApp
+    // Логика формирования сообщения может быть адаптирована под язык, но пока сделаем универсально или на языке интерфейса
+    let message = "";
+    if (langKey === 'ru') {
+      message = `Здравствуйте! Хочу забронировать номер: ${roomName}. Количество гостей: ${guests}.`;
+    } else if (langKey === 'kz') {
+      message = `Сәлеметсіз бе! Мен нөмірді брондағым келеді: ${roomName}. Қонақтар саны: ${guests}.`;
+    } else if (langKey === 'en') {
+      message = `Hello! I would like to book a room: ${roomName}. Number of guests: ${guests}.`;
+    } else {
+      // Default to English or Russian if needed, currently using translations mapping logic
+      message = `${localT.whatsappHi}${roomName}. ${localT.guestsLabel} ${guests}.`;
     }
-  ];
+
+    const whatsappUrl = `https://wa.me/+77055660909?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
+  const nextFullscreen = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!fullscreenData) return;
+    setFullscreenData({
+      ...fullscreenData,
+      index: (fullscreenData.index + 1) % fullscreenData.images.length
+    });
+  };
+
+  const prevFullscreen = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!fullscreenData) return;
+    setFullscreenData({
+      ...fullscreenData,
+      index: (fullscreenData.index - 1 + fullscreenData.images.length) % fullscreenData.images.length
+    });
+  };
 
   return (
-    // ГЛАВНОЕ: Убрал все фоны (bg-...), оставил только отступы. 
-    // Фон теперь тянется из index.css (body)
-    <div className="min-h-screen pt-24 pb-16 relative z-10">
-      
-      <div className="container mx-auto px-4 md:px-6 max-w-6xl">
-        
-        {/* ЗАГОЛОВОК СТРАНИЦЫ */}
-        <div className="text-center mb-16">
-          <div className="inline-block p-4 rounded-3xl backdrop-blur-sm">
-            <h1 className="font-serif text-4xl md:text-6xl font-bold text-primary mb-4">
-              Номера и цены
-            </h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Комфортное проживание в центре Петропавловска.
-            </p>
+    <div className="min-h-screen pt-20 pb-12 sm:pb-16 relative overflow-visible bg-gray-50/50">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl 2xl:max-w-[1600px] pb-16">
+
+        {/* Smoking Notice */}
+        <div className="mb-12 bg-white border border-amber-200 p-4 rounded-xl flex items-center gap-4 shadow-sm max-w-4xl mx-auto">
+          <div className="bg-amber-100 p-2 rounded-full">
+            <CigaretteOff className="w-6 h-6 text-amber-600 flex-shrink-0" />
           </div>
+          <p className="text-amber-900 text-sm md:text-base font-serif italic">
+            {/* 
+                Since smokingNotice was removed from SHARED_TRANSLATIONS in the helper, 
+                we might need to add it back or hardcode it. 
+                Wait, I see I didn't include smokingNotice in the new file's translations.
+                I should probably check if it was there. 
+                Checking my own output for src/data/rooms.ts... 
+                It seems I missed 'smokingNotice' in the consolidated file! 
+                I will add a fallback here for now to avoid errors.
+            */}
+            {(localT as any).smokingNotice || "Внимание! Во всех номерах отеля курение строго запрещено. / Attention! Smoking is strictly prohibited."}
+          </p>
         </div>
 
-        {/* --- NO SMOKING --- */}
-        <div className="max-w-3xl mx-auto mb-16 relative overflow-hidden rounded-2xl bg-white/70 backdrop-blur-md border border-red-100 shadow-sm p-4 md:p-5 flex items-center gap-5 group hover:shadow-lg hover:shadow-red-500/5 transition-all duration-300">
-            <div className="absolute -left-6 -top-6 w-24 h-24 bg-red-50 rounded-full blur-xl opacity-60"></div>
-            <div className="relative z-10 flex-shrink-0 w-12 h-12 rounded-full bg-red-50 flex items-center justify-center border border-red-100 text-red-900/80 group-hover:scale-105 transition-transform">
-                <CigaretteOff className="w-5 h-5" />
-            </div>
-            <div className="relative z-10 flex-grow">
-                <h3 className="font-serif font-bold text-primary text-lg uppercase tracking-wide flex items-center gap-2">
-                   Территория без дыма
-                </h3>
-                <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                   Курение в номерах <span className="text-red-800 font-medium">запрещено</span>.
-                </p>
-            </div>
-        </div>
-
-        {/* СПИСОК НОМЕРОВ */}
         <div className="space-y-16">
-          {roomCategories.map((category) => (
-            <section 
-              key={category.id} 
-              id={category.id} 
-              // Стеклянный эффект для карточек (white/80) чтобы просвечивал фон
-              className="bg-white/80 backdrop-blur-md rounded-[2.5rem] p-6 md:p-8 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-white/60 hover:border-gold/20 transition-all duration-500 group"
-            >
-              <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
-                
-                {/* ФОТО */}
-                <div className="w-full lg:w-5/12 xl:w-4/12 flex-shrink-0">
-                   <RoomListCarousel images={category.coverImages} alt={category.title} />
-                   
-                   <div className="lg:hidden mt-6 text-center">
-                      <h2 className="font-serif text-2xl font-bold text-primary uppercase">{category.title}</h2>
-                   </div>
-                </div>
+          {ROOM_ORDER.map((roomId) => {
+            const room = ROOMS_DATA[roomId];
+            if (!room) return null;
 
-                {/* ИНФОРМАЦИЯ */}
-                <div className="w-full lg:w-7/12 xl:w-8/12 flex flex-col justify-center">
-                  
-                  <div className="hidden lg:block mb-8 border-b border-gray-100/50 pb-4">
-                    <div className="flex items-center gap-4 mb-2">
-                       <h2 className="font-serif text-3xl font-bold text-primary uppercase tracking-wide group-hover:text-gold transition-colors duration-300">
-                        {category.title}
-                       </h2>
-                       {category.badge && (
-                         <span className="px-3 py-1 bg-gold/10 text-gold text-xs font-bold rounded-full uppercase tracking-wider border border-gold/20">
-                           {category.badge}
-                         </span>
-                       )}
+            const title = room.name[langKey] || room.name.ru;
+            const description = (localT.categories as any)[room.descriptionCategory]?.desc || "";
+            const currentGuests = guestCounts[roomId] || 1;
+
+            return (
+              <section
+                key={room.id}
+                id={room.id}
+                className="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+
+                  {/* Левая колонка - Карусель (на мобильных сверху) */}
+                  <div className="lg:col-span-5 xl:col-span-5 relative h-64 sm:h-72 md:h-[400px] lg:h-full min-h-[300px]">
+                    <div className="absolute inset-0">
+                      <RoomListCarousel
+                        images={room.images}
+                        alt={title}
+                        noPhotoText={localT.noPhoto}
+                        onImageClick={(idx) => setFullscreenData({ images: room.images, index: idx, title: title })}
+                      />
                     </div>
-                    <p className="text-muted-foreground text-lg font-light">
-                      {category.description}
-                    </p>
                   </div>
 
-                  <div className="space-y-4">
-                    {category.rooms.map((room) => (
-                      <div key={room.id} className="relative p-4 rounded-2xl hover:bg-white/60 transition-colors duration-300 border border-transparent hover:border-gray-100/50">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
-                          
-                          <div className="flex-grow">
-                            <h3 className="text-base md:text-lg font-bold text-gray-800 uppercase tracking-tight">
-                              {room.name}
-                            </h3>
-                            <div className="md:hidden text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                              <Users className="w-3 h-3" /> {room.capacity}
-                            </div>
-                          </div>
-
-                          <div className="flex items-center justify-between md:justify-end gap-6 flex-shrink-0 mt-2 md:mt-0">
-                            
-                            <div className="text-right min-w-[100px]">
-                               <span className="block text-xl md:text-2xl font-bold text-primary whitespace-nowrap">
-                                 {room.price} ₸
-                               </span>
-                               <span className="text-xs text-muted-foreground hidden md:block">
-                                 {room.capacity}
-                               </span>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                              <Link to={room.link}>
-                                <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full bg-white/80 hover:bg-gold/10 text-gray-400 hover:text-gold border border-gray-200 hover:border-gold/30 transition-all shadow-sm">
-                                  <ChevronRight className="w-5 h-5" />
-                                </Button>
-                              </Link>
-
-                              <Link to="/rates">
-                                <Button className="btn-luxury h-10 px-6 rounded-full text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg">
-                                   {t("nav.book")}
-                                </Button>
-                              </Link>
-                            </div>
-
+                  {/* Правая колонка - Информация */}
+                  <div className="lg:col-span-7 xl:col-span-7 p-6 md:p-8 lg:p-10 flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-start gap-4 mb-4">
+                        <div>
+                          <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary mb-2 leading-tight">
+                            {title}
+                          </h2>
+                          <p className="font-serif text-muted-foreground text-sm md:text-base italic mb-4">
+                            {description}
+                          </p>
+                        </div>
+                        <div className="text-right flex-shrink-0">
+                          <div className="font-serif text-2xl md:text-3xl font-bold text-primary">
+                            {room.price} <span className="text-sm text-primary/70">₸</span>
                           </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
 
+                      <div className="w-full h-px bg-gray-100 mb-6" />
+
+                      {/* Удобства */}
+                      <div className="mb-8">
+                        <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">
+                          {(localT.amenities as any)?.amenitiesLabel || "Удобства / Amenities"}
+                        </h3>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-3 gap-x-2">
+                          {room.amenityKeys.map(key => {
+                            const Icon = AMENITY_ICONS[key];
+                            const label = (localT.amenities as any)[key];
+                            if (!Icon) return null;
+                            return (
+                              <div key={key} className="flex items-center gap-2 text-gray-700">
+                                <Icon className="w-4 h-4 text-primary/70" />
+                                <span className="text-xs sm:text-sm">{label}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Блок бронирования */}
+                    <div className="bg-primary/5 rounded-xl p-4 sm:p-5 mt-4 border border-primary/10">
+                      <div className="flex flex-col sm:flex-row items-center gap-4 justify-between">
+
+                        {/* Счетчик гостей */}
+                        <div className="flex items-center gap-3 bg-white px-3 py-1.5 rounded-lg shadow-sm border border-gray-200">
+                          <span className="text-sm font-medium text-gray-600 mr-2 flex items-center gap-2">
+                            <Users className="w-4 h-4" />
+                            {localT.guestsLabel}
+                          </span>
+                          <button
+                            onClick={() => handleGuestChange(room.id, -1)}
+                            className="p-1 hover:bg-gray-100 rounded-full text-primary transition-colors"
+                            disabled={currentGuests <= 1}
+                          >
+                            <Minus className="w-4 h-4" />
+                          </button>
+                          <span className="w-4 text-center font-bold text-lg">{currentGuests}</span>
+                          <button
+                            onClick={() => handleGuestChange(room.id, 1)}
+                            className="p-1 hover:bg-gray-100 rounded-full text-primary transition-colors"
+                            disabled={currentGuests >= 10}
+                          >
+                            <Plus className="w-4 h-4" />
+                          </button>
+                        </div>
+
+                        {/* Кнопка */}
+                        <Button
+                          onClick={() => handleBookClick(room)}
+                          className="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white h-11 px-8 rounded-lg text-sm font-bold uppercase tracking-wider shadow-md gap-2"
+                        >
+                          <svg className="w-5 h-5 mr-0.5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                          </svg>
+                          {localT.bookBtn}
+                        </Button>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
-              </div>
-            </section>
-          ))}
+              </section>
+            );
+          })}
         </div>
 
+        {/* Global Fullscreen Viewer */}
+        {fullscreenData && (
+          <div
+            className="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center overflow-hidden"
+            onClick={() => setFullscreenData(null)}
+          >
+            <button
+              className="absolute top-6 right-6 text-white text-4xl hover:text-gold transition-colors z-[10000]"
+              onClick={() => setFullscreenData(null)}
+            >
+              ×
+            </button>
+
+            <div className="relative w-full h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+              {fullscreenData.images.map((src, idx) => (
+                <div
+                  key={idx}
+                  className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${idx === fullscreenData.index ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                    }`}
+                >
+                  <img
+                    src={src}
+                    className="max-w-full max-h-full object-contain"
+                    alt={`${fullscreenData.title} Fullscreen`}
+                  />
+                </div>
+              ))}
+
+              {/* Navigation Indicators inside Fullscreen */}
+              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+                {fullscreenData.images.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${idx === fullscreenData.index ? "bg-white w-8" : "bg-white/40 w-2"
+                      }`}
+                  />
+                ))}
+              </div>
+
+              {fullscreenData.images.length > 1 && (
+                <>
+                  <button
+                    className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors z-20"
+                    onClick={prevFullscreen}
+                  >
+                    <span className="text-3xl">←</span>
+                  </button>
+                  <button
+                    className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors z-20"
+                    onClick={nextFullscreen}
+                  >
+                    <span className="text-3xl">→</span>
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

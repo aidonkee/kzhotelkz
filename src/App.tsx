@@ -16,6 +16,15 @@ import NotFound from "@/pages/NotFound";
 import ServicesPage from "@/pages/ServicesPage";
 import NewsDetailPage from "@/pages/NewsDetailPage";
 
+import { DataProvider } from "@/contexts/DataContext";
+import { AdminProvider } from "@/contexts/AdminContext";
+import AdminLogin from "@/pages/admin/AdminLogin";
+import AdminLayout from "@/pages/admin/AdminLayout";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AdminRooms from "@/pages/admin/AdminRooms";
+import AdminCalculator from "@/pages/admin/AdminCalculator";
+import AdminNews from "@/pages/admin/AdminNews";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -23,23 +32,36 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/rooms" element={<RoomsPage />} />
-            <Route path="/room/:id" element={<RoomDetailPage />} />
-            <Route path="/booking" element={<BookingPage />} />
-            <Route path="/rates" element={<BookingCalculatorPage />} /> {/* <--- НОВЫЙ МАРШРУТ */}
-            <Route path="/conference" element={<ConferencePage />} />
-            <Route path="/contacts" element={<ContactsPage />} />
-            <Route path="/news" element={<NewsPage />} />
-            <Route path="/news/:id" element={<NewsDetailPage />} />
-            <Route path="*" element={<NotFound />} />
-            <Route path="/services" element={<ServicesPage />} />
-          </Routes>
-        </Layout>
-      </BrowserRouter>
+      <DataProvider>
+        <AdminProvider>
+          <BrowserRouter>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<Layout><HomePage /></Layout>} />
+              <Route path="/rooms" element={<Layout><RoomsPage /></Layout>} />
+              <Route path="/room/:id" element={<Layout><RoomDetailPage /></Layout>} />
+              <Route path="/booking" element={<Layout><BookingPage /></Layout>} />
+              <Route path="/rates" element={<Layout><BookingCalculatorPage /></Layout>} />
+              <Route path="/conference" element={<Layout><ConferencePage /></Layout>} />
+              <Route path="/contacts" element={<Layout><ContactsPage /></Layout>} />
+              <Route path="/news" element={<Layout><NewsPage /></Layout>} />
+              <Route path="/news/:id" element={<Layout><NewsDetailPage /></Layout>} />
+              <Route path="/services" element={<Layout><ServicesPage /></Layout>} />
+
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<AdminLogin />} />
+                <Route path="dashboard" element={<AdminDashboard />} />
+                <Route path="rooms" element={<AdminRooms />} />
+                <Route path="calculator" element={<AdminCalculator />} />
+                <Route path="news" element={<AdminNews />} />
+              </Route>
+
+              <Route path="*" element={<Layout><NotFound /></Layout>} />
+            </Routes>
+          </BrowserRouter>
+        </AdminProvider>
+      </DataProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

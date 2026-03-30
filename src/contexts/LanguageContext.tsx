@@ -121,7 +121,7 @@ const translations: Record<Language, Record<string, string>> = {
     "amenities.taxi": "Такси",
     "amenities.taxi.desc": "Трансфер по городу",
     "amenities.spa": "Спа",
-    "amenities.spa.desc": "Релакс и массаж",
+    "amenities.spa.desc": "Релакс и отдых",
     "amenities.pool": "Бассейн",
     "amenities.pool.desc": "Крытый бассейн",
     "amenities.coffee": "Кофейня",
@@ -233,7 +233,7 @@ const translations: Record<Language, Record<string, string>> = {
     "booking.select_room": "Выберите номер",
     "booking.send": "Отправить",
     "booking.book_this_room": "Забронировать этот номер",
-    
+
     // --- Room Amenities List ---
     "room.amenity.single_bed": "Односпальная кровать",
     "room.amenity.double_bed": "Двуспальная кровать",
@@ -312,7 +312,7 @@ const translations: Record<Language, Record<string, string>> = {
     "amenities.taxi": "Такси",
     "amenities.taxi.desc": "Трансфер қызметі",
     "amenities.spa": "Спа",
-    "amenities.spa.desc": "Массаж",
+    "amenities.spa.desc": "Демалыс",
     "amenities.pool": "Бассейн",
     "amenities.pool.desc": "Жабық бассейн",
     "amenities.coffee": "Кофехана",

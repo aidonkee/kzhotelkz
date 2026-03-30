@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useData } from "@/contexts/DataContext";
 import { Calendar, ArrowRight, PlayCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { newsData } from "@/data/newsData";
 
 const NewsPage = () => {
   const { t } = useLanguage();
+  const { news } = useData();
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -27,6 +28,8 @@ const NewsPage = () => {
     return labels[category] || category;
   };
 
+  const sortedNews = [...news].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
   return (
     <div className="min-h-screen pt-24 pb-16">
       <div className="container mx-auto px-6">
@@ -41,34 +44,34 @@ const NewsPage = () => {
         </div>
 
         {/* Featured News (Первая новость) */}
-        {newsData.length > 0 && (
+        {sortedNews.length > 0 && (
           <div className="mb-12">
-            <Link to={`/news/${newsData[0].id}`} className="block group">
+            <Link to={`/news/${sortedNews[0].id}`} className="block group">
               <div className="relative rounded-3xl overflow-hidden h-[400px] md:h-[500px]">
                 <img
-                  src={newsData[0].image}
+                  src={sortedNews[0].image}
                   // Используем t() для перевода заголовка
-                  alt={t(newsData[0].titleKey)}
+                  alt={t(sortedNews[0].titleKey)}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="bg-gold text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {getCategoryLabel(newsData[0].category)}
+                      {getCategoryLabel(sortedNews[0].category)}
                     </span>
                     <span className="flex items-center gap-1 text-white/80 text-sm">
                       <Calendar className="w-4 h-4" />
-                      {formatDate(newsData[0].date)}
+                      {formatDate(sortedNews[0].date)}
                     </span>
                   </div>
                   <h2 className="font-serif text-2xl md:text-4xl font-bold text-white mb-4 leading-tight">
                     {/* ПЕРЕВОД ЗАГОЛОВКА */}
-                    {t(newsData[0].titleKey)}
+                    {t(sortedNews[0].titleKey)}
                   </h2>
                   <p className="text-white/80 text-lg mb-6 max-w-2xl line-clamp-2">
                     {/* ПЕРЕВОД ОПИСАНИЯ */}
-                    {t(newsData[0].descKey)}
+                    {t(sortedNews[0].descKey)}
                   </p>
                   <Button className="btn-luxury pointer-events-none">
                     {t("news.read_more")}
@@ -82,7 +85,7 @@ const NewsPage = () => {
 
         {/* News Grid (Остальные новости) */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {newsData.slice(1).map((item) => (
+          {sortedNews.slice(1).map((item) => (
             <Link to={`/news/${item.id}`} key={item.id} className="group">
               <article className="bg-card h-full flex flex-col rounded-2xl overflow-hidden shadow-luxury hover:shadow-xl transition-all duration-300">
                 <div className="relative h-56 overflow-hidden">

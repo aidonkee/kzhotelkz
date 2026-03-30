@@ -1,79 +1,119 @@
 import { useState, useMemo } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useData } from "@/contexts/DataContext";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus, ShoppingCart, CheckCircle2 } from "lucide-react";
+import { Minus, Plus, ShoppingCart, BedDouble, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// --- ДАННЫЕ (Взяты с твоих скриншотов) ---
-const calculatorData = [
-  {
-    id: "family",
-    title: "СЕМЕЙНЫЙ",
-    image: "/family-3-room/1-IMAGE 2025-12-25 20:21:35.jpg", // Используем фото из предыдущих шагов
-    rooms: [
-      { id: "fam-2", name: "Семейный 2-х комнатный", priceNight: 25000, pricePlace: 25000 },
-      { id: "fam-3", name: "Семейный 3-х комнатный", priceNight: 30000, pricePlace: 10000 },
-    ]
+// --- Translations ---
+const TRANSLATIONS = {
+  // ... (keeping translations as they are, just collapsing for brevity in replacement if possible, but replace_file_content needs exact match. 
+  // I will rely on the fact that I'm replacing the top part and removing calculatorData constant)
+  ru: {
+    title: "Онлайн-Бронирование",
+    subtitle: "Выберите тариф (за номер или за место) и укажите количество.",
+    colCategory: "Категория",
+    colName: "Наименование номера",
+    colTariff: "Выберите тариф",
+    colQty: "Количество",
+    night: "За номер",
+    place: "За место",
+    total: "Итоговая стоимость",
+    bookBtn: "ЗАБРОНИРОВАТЬ ЧЕРЕЗ WHATSAPP",
+    catLabel: "Категория",
+    waInit: "Здравствуйте! Я использовал онлайн-калькулятор на сайте и хочу забронировать:\n\n",
+    waTypeNight: "За номер (Ночь)",
+    waTypePlace: "За место",
+    waTotal: "ИТОГО",
+    waTotalSum: "Сумма"
   },
-  {
-    id: "lux",
-    title: "ЛЮКС",
-    image: "/3-room-lux/17-photo_5361824987964182350_y (1).jpg",
-    rooms: [
-      { id: "lux-2-imp", name: "Люкс 2-х комнатный (Улучшенный)", priceNight: 40000, pricePlace: 40000 },
-      { id: "lux-3", name: "Люкс 3-х комнатный", priceNight: 45000, pricePlace: 45000 },
-      { id: "lux-2", name: "Люкс 2-х комнатный", priceNight: 35000, pricePlace: 35000 },
-    ]
+  kz: {
+    title: "Онлайн Брондау",
+    subtitle: "Тарифті таңдаңыз (нөмір үшін немесе орын үшін) және санын көрсетіңіз.",
+    colCategory: "Санат",
+    colName: "Нөмір атауы",
+    colTariff: "Тарифті таңдаңыз",
+    colQty: "Саны",
+    night: "Нөмір үшін",
+    place: "Орын үшін",
+    total: "Жалпы құны",
+    bookBtn: "WHATSAPP АРҚЫЛЫ БРОНДАУ",
+    catLabel: "Санат",
+    waInit: "Сәлеметсіз бе! Мен сайттағы онлайн-калькуляторды қолдандым және брондағым келеді:\n\n",
+    waTypeNight: "Нөмір үшін (Түн)",
+    waTypePlace: "Орын үшін",
+    waTotal: "ЖАЛПЫ",
+    waTotalSum: "Сомасы"
   },
-  {
-    id: "semilux",
-    title: "ПОЛУЛЮКС",
-    image: "/semi-lux-2-place/10-photo_5361824987964182344_y (1).jpg",
-    rooms: [
-      { id: "semi-1", name: "1 местный однокомнатный", priceNight: 19000, pricePlace: 19000 },
-      { id: "semi-1-2room", name: "1 местный 2-х комнатный", priceNight: 28000, pricePlace: 28000 },
-      { id: "semi-2-2room", name: "2-х местный 2-х комнатный", priceNight: 32000, pricePlace: 16000 },
-    ]
+  en: {
+    title: "Online Booking",
+    subtitle: "Choose a rate (per room or per person) and specify quantity.",
+    colCategory: "Category",
+    colName: "Room Name",
+    colTariff: "Choose Rate",
+    colQty: "Quantity",
+    night: "Per Room",
+    place: "Per Person",
+    total: "Total Cost",
+    bookBtn: "BOOK VIA WHATSAPP",
+    catLabel: "Category",
+    waInit: "Hello! I used the online calculator on the website and want to book:\n\n",
+    waTypeNight: "Per Room (Night)",
+    waTypePlace: "Per Person",
+    waTotal: "TOTAL",
+    waTotalSum: "Sum"
   },
-  {
-    id: "econom-plus",
-    title: "ЭКОНОМ +",
-    image: "/2-place-econom+/picture-1.jpg",
-    rooms: [
-      { id: "eco-p-3", name: "Эконом+ 3-х местный", priceNight: 33000, pricePlace: 11000 },
-      { id: "eco-p-1", name: "Эконом+ Однокомнатный", priceNight: 15000, pricePlace: 15000 },
-      { id: "eco-p-2", name: "Эконом+ 2-х местный", priceNight: 24000, pricePlace: 12000 },
-      { id: "eco-p-1-large", name: "Эконом+ Одноместный (Большой)", priceNight: 22000, pricePlace: 22000 },
-    ]
+  zh: {
+    title: "在线预订",
+    subtitle: "选择费率（按房间或按人）并指定数量。",
+    colCategory: "类别",
+    colName: "房间名称",
+    colTariff: "选择费率",
+    colQty: "数量",
+    night: "每间房",
+    place: "每人",
+    total: "总费用",
+    bookBtn: "通过 WHATSAPP 预订",
+    catLabel: "类别",
+    waInit: "您好！我使用了网站上的在线计算器，想预订：\n\n",
+    waTypeNight: "每间房（晚）",
+    waTypePlace: "每人",
+    waTotal: "总计",
+    waTotalSum: "金额"
   },
-  {
-    id: "standard",
-    title: "СТАНДАРТ",
-    image: "/one-place-standart/picture-1.jpg",
-    rooms: [
-      { id: "std-1", name: "1 местный", priceNight: 17000, pricePlace: 17000 },
-      { id: "std-2", name: "2-х местный", priceNight: 27000, pricePlace: 13500 },
-    ]
-  },
-  {
-    id: "econom",
-    title: "ЭКОНОМ",
-    image: "/1-place-econom/picture-1.jpg",
-    rooms: [
-      { id: "eco-1-l", name: "Одноместный Эконом с большой кроватью", priceNight: 20000, pricePlace: 20000 },
-      { id: "eco-2", name: "Эконом 2-х местный", priceNight: 20000, pricePlace: 10000 },
-      { id: "eco-1", name: "Эконом 1-о местный", priceNight: 12000, pricePlace: 12000 },
-      { id: "eco-4", name: "4-х местный", priceNight: 40000, pricePlace: 10000 },
-      { id: "eco-3", name: "3-х местный", priceNight: 30000, pricePlace: 10000 },
-    ]
+  az: {
+    title: "Onlayn Bronlaşdırma",
+    subtitle: "Tarifi seçin (otaq üçün və ya yer üçün) və sayı göstərin.",
+    colCategory: "Kateqoriya",
+    colName: "Otaq adı",
+    colTariff: "Tarifi seçin",
+    colQty: "Say",
+    night: "Otaq üçün",
+    place: "Yer üçün",
+    total: "Yekun qiymət",
+    bookBtn: "WHATSAPP İLƏ BRON ET",
+    catLabel: "Kateqoriya",
+    waInit: "Salam! Saytdakı onlayn kalkulyatordan istifadə etdim və bron etmək istəyirəm:\n\n",
+    waTypeNight: "Otaq üçün (Gecə)",
+    waTypePlace: "Yer üçün",
+    waTotal: "CƏMİ",
+    waTotalSum: "Məbləğ"
   }
-];
+};
+
 
 const BookingCalculatorPage = () => {
-  const { t } = useLanguage();
-  
+  const { language } = useLanguage();
+  const { calculatorData } = useData(); // <--- Get data from context
+  const langKey = (language as keyof typeof TRANSLATIONS) || 'ru';
+  const localT = TRANSLATIONS[langKey];
+
   // Состояние: ID номера -> количество
   const [quantities, setQuantities] = useState<Record<string, number>>({});
+
+  // Состояние: ID номера -> тип цены ('night' | 'place')
+  // По умолчанию ставим 'night'
+  const [priceTypes, setPriceTypes] = useState<Record<string, 'night' | 'place'>>({});
 
   const handleIncrement = (id: string) => {
     setQuantities(prev => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
@@ -87,21 +127,26 @@ const BookingCalculatorPage = () => {
     });
   };
 
+  const togglePriceType = (id: string, type: 'night' | 'place') => {
+    setPriceTypes(prev => ({ ...prev, [id]: type }));
+  };
+
   // Подсчет итоговой суммы
   const totalSum = useMemo(() => {
     let sum = 0;
     calculatorData.forEach(cat => {
       cat.rooms.forEach(room => {
         const qty = quantities[room.id] || 0;
-        sum += qty * room.priceNight;
+        const type = priceTypes[room.id] || 'night';
+        const price = type === 'night' ? room.priceNight : room.pricePlace;
+        sum += qty * price;
       });
     });
     return sum;
-  }, [quantities]);
+  }, [quantities, priceTypes]);
 
   const handleWhatsAppOrder = () => {
-    // Формируем красивое сообщение для WhatsApp
-    let message = "Здравствуйте! Я использовал онлайн-калькулятор на сайте и хочу забронировать:\n\n";
+    let message = localT.waInit;
     let hasItems = false;
 
     calculatorData.forEach(cat => {
@@ -109,172 +154,191 @@ const BookingCalculatorPage = () => {
         const qty = quantities[room.id] || 0;
         if (qty > 0) {
           hasItems = true;
-          message += `🔹 *${room.name}* (${cat.title})\n   Кол-во: ${qty} | Сумма: ${qty * room.priceNight} ₸\n`;
+          const type = priceTypes[room.id] || 'night';
+          const price = type === 'night' ? room.priceNight : room.pricePlace;
+          const typeLabel = type === 'night' ? localT.waTypeNight : localT.waTypePlace;
+          const roomName = (room.name as any)[langKey] || room.name.ru;
+          const catTitle = (cat.title as any)[langKey] || cat.title.ru;
+
+          message += `🔹 *${roomName}* (${catTitle})\n   Tip: ${typeLabel}\n   Qty: ${qty} | ${localT.waTotalSum}: ${qty * price} ₸\n\n`;
         }
       });
     });
 
     if (!hasItems) return;
 
-    message += `\n💰 *ИТОГО: ${totalSum} ₸*`;
-    
+    message += `💰 *${localT.waTotal}: ${totalSum.toLocaleString()} ₸*`;
+
     const whatsappUrl = `https://wa.me/+77055660909?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
   };
 
   return (
     <div className="min-h-screen pt-[80px] pb-32 relative bg-[#FAFAFA]">
-      
+
       {/* Заголовок */}
       <div className="container mx-auto px-4 mb-12 text-center">
         <h1 className="font-serif text-3xl md:text-5xl font-bold text-primary mb-4 uppercase tracking-wide">
-          Онлайн-Бронирование
+          {localT.title}
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Выберите необходимое количество номеров. Итоговая стоимость рассчитается автоматически.
+          {localT.subtitle}
         </p>
       </div>
 
       <div className="container mx-auto px-4 max-w-6xl space-y-8">
-        
-        {/* Шапка таблицы (скрыта на мобильных, видна на ПК) */}
+
+        {/* Шапка таблицы */}
         <div className="hidden md:grid grid-cols-12 gap-4 text-xs font-bold text-gray-400 uppercase tracking-wider px-8 pb-2 border-b border-gray-200">
-          <div className="col-span-3">Категория</div>
-          <div className="col-span-4">Наименование номера</div>
-          <div className="col-span-3 text-center flex justify-around">
-            <span>Ночь</span>
-            <span>Место</span>
-          </div>
-          <div className="col-span-2 text-right">Количество</div>
+          <div className="col-span-3">{localT.colCategory}</div>
+          <div className="col-span-4">{localT.colName}</div>
+          <div className="col-span-3 text-center">{localT.colTariff}</div>
+          <div className="col-span-2 text-right">{localT.colQty}</div>
         </div>
 
-        {calculatorData.map((category) => (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            key={category.id}
-            className="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden group hover:shadow-lg transition-all duration-500"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4 p-6 items-center">
-              
-              {/* Левая часть: Фото и Название категории */}
-              <div className="md:col-span-3 flex md:flex-col items-center md:items-start gap-4 md:border-r md:border-gray-100 md:pr-4">
-                <div className="relative w-20 h-20 md:w-32 md:h-32 rounded-2xl overflow-hidden flex-shrink-0 shadow-md">
-                  <img 
-                    src={category.image} 
-                    alt={category.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    onError={(e) => { e.currentTarget.src = "https://placehold.co/150"; }}
-                  />
-                  {/* Бейдж категории */}
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-white font-serif text-xs font-bold bg-black/50 px-2 py-1 rounded backdrop-blur-sm">
-                      {category.title}
-                    </span>
+        {calculatorData.map((category) => {
+          const categoryTitle = (category.title as any)[langKey] || category.title.ru;
+          return (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              key={category.id}
+              className="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden group hover:shadow-lg transition-all duration-500"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 p-6 items-center">
+
+                {/* Левая часть: Фото и Название */}
+                <div className="md:col-span-3 flex md:flex-col items-center md:items-center gap-4 md:border-r md:border-gray-100 md:pr-6 h-full">
+                  <div className="relative w-24 h-24 md:w-48 md:h-48 rounded-2xl overflow-hidden flex-shrink-0 shadow-lg border border-gray-100 aspect-square">
+                    <img
+                      src={category.image}
+                      alt={categoryTitle}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      onError={(e) => { e.currentTarget.src = "https://placehold.co/400?text=No+Image"; }}
+                    />
+                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span className="text-white font-serif text-sm font-bold bg-black/50 px-3 py-1.5 rounded backdrop-blur-sm">
+                        {categoryTitle}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <h2 className="font-serif text-xl md:text-2xl font-bold text-primary mb-1">{categoryTitle}</h2>
+                    <span className="text-xs text-muted-foreground uppercase tracking-widest hidden md:block">{localT.catLabel}</span>
                   </div>
                 </div>
-                <h2 className="font-serif text-xl font-bold text-primary md:hidden">{category.title}</h2>
-                <div className="hidden md:block">
-                  <h2 className="font-serif text-2xl font-bold text-primary mb-1">{category.title}</h2>
-                  <span className="text-xs text-muted-foreground uppercase tracking-widest">Категория</span>
+
+                {/* Правая часть: Список номеров */}
+                <div className="md:col-span-9 space-y-6 md:space-y-0">
+                  {category.rooms.map((room, idx) => {
+                    const currentType = priceTypes[room.id] || 'night';
+                    const roomName = (room.name as any)[langKey] || room.name.ru;
+
+                    return (
+                      <div
+                        key={room.id}
+                        className={`flex flex-col md:grid md:grid-cols-9 gap-4 items-start md:items-center py-5 ${idx !== category.rooms.length - 1 ? "md:border-b md:border-gray-50" : ""
+                          }`}
+                      >
+                        {/* Название */}
+                        <div className="md:col-span-4 font-medium text-gray-800 text-sm md:text-base pr-2">
+                          {roomName}
+                        </div>
+
+                        {/* Выбор тарифа (Ночь / Место) */}
+                        <div className="md:col-span-3 flex justify-center w-full">
+                          <div className="flex bg-gray-50 p-1 rounded-xl border border-gray-100 w-full max-w-[240px]">
+                            {/* Кнопка НОЧЬ */}
+                            <button
+                              onClick={() => togglePriceType(room.id, 'night')}
+                              className={`flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-lg text-xs transition-all duration-300 ${currentType === 'night'
+                                ? 'bg-white shadow-sm text-primary font-bold border border-gray-100'
+                                : 'text-gray-400 hover:text-gray-600'
+                                }`}
+                            >
+                              <span className="flex items-center gap-1 mb-0.5"><BedDouble className="w-3 h-3" /> {localT.night}</span>
+                              <span>{room.priceNight.toLocaleString()} ₸</span>
+                            </button>
+
+                            {/* Кнопка МЕСТО */}
+                            <button
+                              onClick={() => togglePriceType(room.id, 'place')}
+                              className={`flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-lg text-xs transition-all duration-300 ${currentType === 'place'
+                                ? 'bg-white shadow-sm text-primary font-bold border border-gray-100'
+                                : 'text-gray-400 hover:text-gray-600'
+                                }`}
+                            >
+                              <span className="flex items-center gap-1 mb-0.5"><User className="w-3 h-3" /> {localT.place}</span>
+                              <span>{room.pricePlace.toLocaleString()} ₸</span>
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Контрол количества */}
+                        <div className="md:col-span-2 w-full flex justify-end">
+                          <div className="flex items-center bg-gray-50 rounded-xl p-1.5 shadow-inner border border-gray-200">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleDecrement(room.id)}
+                              className="h-9 w-9 rounded-lg hover:bg-white hover:shadow-sm transition-all text-gray-500"
+                              disabled={!quantities[room.id]}
+                            >
+                              <Minus className="w-4 h-4" />
+                            </Button>
+                            <span className="w-10 text-center font-bold text-lg text-primary">
+                              {quantities[room.id] || 0}
+                            </span>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleIncrement(room.id)}
+                              className="h-9 w-9 rounded-lg hover:bg-white hover:shadow-sm transition-all text-primary"
+                            >
+                              <Plus className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+
+                      </div>
+                    );
+                  })}
                 </div>
+
               </div>
-
-              {/* Правая часть: Список номеров */}
-              <div className="md:col-span-9 space-y-6 md:space-y-0">
-                {category.rooms.map((room, idx) => (
-                  <div 
-                    key={room.id} 
-                    className={`flex flex-col md:grid md:grid-cols-9 gap-4 items-start md:items-center py-4 ${
-                      idx !== category.rooms.length - 1 ? "md:border-b md:border-gray-50" : ""
-                    }`}
-                  >
-                    {/* Название */}
-                    <div className="md:col-span-4 font-medium text-gray-800 text-sm md:text-base pr-2">
-                      {room.name}
-                    </div>
-
-                    {/* Цены */}
-                    <div className="md:col-span-3 flex justify-between w-full md:justify-around text-sm">
-                      <div className="flex flex-col items-center gap-1">
-                         <span className="md:hidden text-xs text-gray-400 uppercase">За ночь</span>
-                         <div className="flex items-center gap-1.5 font-bold text-primary bg-primary/5 px-2 py-1 rounded-md">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
-                            {room.priceNight.toLocaleString()} ₸
-                         </div>
-                      </div>
-                      <div className="flex flex-col items-center gap-1 opacity-60 grayscale hover:grayscale-0 transition-all">
-                         <span className="md:hidden text-xs text-gray-400 uppercase">За место</span>
-                         <div className="flex items-center gap-1.5 font-medium text-gray-600 px-2 py-1">
-                            <CheckCircle2 className="w-3.5 h-3.5" />
-                            {room.pricePlace.toLocaleString()} ₸
-                         </div>
-                      </div>
-                    </div>
-
-                    {/* Контрол количества */}
-                    <div className="md:col-span-2 w-full flex justify-end">
-                      <div className="flex items-center bg-gray-50 rounded-xl p-1 shadow-inner border border-gray-100">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleDecrement(room.id)}
-                          className="h-8 w-8 rounded-lg hover:bg-white hover:shadow-sm transition-all text-gray-500"
-                          disabled={!quantities[room.id]}
-                        >
-                          <Minus className="w-4 h-4" />
-                        </Button>
-                        <span className="w-8 text-center font-bold text-primary">
-                          {quantities[room.id] || 0}
-                        </span>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleIncrement(room.id)}
-                          className="h-8 w-8 rounded-lg hover:bg-white hover:shadow-sm transition-all text-primary"
-                        >
-                          <Plus className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-
-                  </div>
-                ))}
-              </div>
-
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          )
+        })}
 
       </div>
 
-      {/* --- FLOATING TOTAL BAR (Липкий подвал с итогом) --- */}
+      {/* --- FLOATING TOTAL BAR --- */}
       <AnimatePresence>
         {totalSum > 0 && (
-          <motion.div 
+          <motion.div
             initial={{ y: 100 }}
             animate={{ y: 0 }}
             exit={{ y: 100 }}
             className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] z-50 py-4 px-6 md:px-0"
           >
             <div className="container mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-4">
-              
+
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                   <ShoppingCart className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground uppercase font-bold tracking-wider">Итоговая стоимость</p>
+                  <p className="text-sm text-muted-foreground uppercase font-bold tracking-wider">{localT.total}</p>
                   <p className="text-3xl font-bold text-primary leading-none">{totalSum.toLocaleString()} ₸</p>
                 </div>
               </div>
 
-              <Button 
+              <Button
                 onClick={handleWhatsAppOrder}
-                className="w-full md:w-auto btn-luxury h-14 px-8 text-lg rounded-xl shadow-lg hover:shadow-primary/40 animate-pulse-slow"
+                className="w-full md:w-auto btn-luxury h-14 px-8 text-lg rounded-xl shadow-lg hover:shadow-primary/40 animate-pulse-slow uppercase"
               >
-                ЗАБРОНИРОВАТЬ ЧЕРЕЗ WHATSAPP
+                {localT.bookBtn}
               </Button>
 
             </div>

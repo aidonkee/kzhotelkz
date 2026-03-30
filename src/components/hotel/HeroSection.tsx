@@ -1,119 +1,270 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Calendar, Users, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const TRANSLATIONS = {
+  ru: {
+    checkIn: "Дата заезда",
+    checkOut: "Дата выезда",
+    guestsPlaceholder: "Гости...",
+    g_1: "1 гость", g_2: "2 гостя", g_3: "3 гостя", g_4: "4 гостя", g_5: "5+ гостей",
+    showRooms: "Показать номера"
+  },
+  kz: {
+    checkIn: "Келу күні",
+    checkOut: "Кету күні",
+    guestsPlaceholder: "Қонақтар...",
+    g_1: "1 қонақ", g_2: "2 қонақ", g_3: "3 қонақ", g_4: "4 қонақ", g_5: "5+ қонақ",
+    showRooms: "Нөмірлерді көрсету"
+  },
+  en: {
+    checkIn: "Check-in",
+    checkOut: "Check-out",
+    guestsPlaceholder: "Guests...",
+    g_1: "1 guest", g_2: "2 guests", g_3: "3 guests", g_4: "4 guests", g_5: "5+ guests",
+    showRooms: "Show Rooms"
+  },
+  zh: {
+    checkIn: "入住日期",
+    checkOut: "退房日期",
+    guestsPlaceholder: "客人...",
+    g_1: "1 位客人", g_2: "2 位客人", g_3: "3 位客人", g_4: "4 位客人", g_5: "5 位以上",
+    showRooms: "查看房型"
+  },
+  az: {
+    checkIn: "Giriş tarixi",
+    checkOut: "Çıxış tarixi",
+    guestsPlaceholder: "Qonaqlar...",
+    g_1: "1 qonaq", g_2: "2 qonaq", g_3: "3 qonaq", g_4: "4 qonaq", g_5: "5+ qonaq",
+    showRooms: "Otaqları göstər"
+  }
+};
 
 const HeroSection = () => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
+  const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // 1. СПИСОК ФОТОГРАФИЙ ДЛЯ ФОНА
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [guests, setGuests] = useState("");
+
   const heroImages = [
-    "/picture.png",
-    "/image copy 18.png",
-    "/image copy 19.png",
+    "/view-5.png",
+    "/view-4.png",
+    "/kyzylzharNomera/reception/IMG_9899.jpg",
+    "/reception-new.jpeg",
+    "/kyzylzharNomera/reception/IMG_9921.jpg",
+    "/kyzylzharNomera/reception/IMG_9928.jpg"
   ];
 
-  // 2. Логика переключения каждые 5 секунд
-  useEffect(() => {
-    if (heroImages.length <= 1) return;
+  const localT = TRANSLATIONS[language as keyof typeof TRANSLATIONS] || TRANSLATIONS.ru;
 
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-    }, 5000); 
-
-    return () => clearInterval(interval);
+  // Функции переключения
+  const nextSlide = useCallback(() => {
+    setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
   }, [heroImages.length]);
 
-  // Функция для ручного переключения
-  const handleDotClick = (index) => {
-    setCurrentImageIndex(index);
+  const prevSlide = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 6000);
+    return () => clearInterval(interval);
+  }, [nextSlide]);
+
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split('T')[0];
+
+  // Calculate minimum checkout date (checkIn + 1 or today + 1)
+  const minCheckOutOffset = checkIn ? new Date(new Date(checkIn).getTime() + 86400000) : new Date(new Date().getTime() + 86400000);
+  const minCheckOut = minCheckOutOffset.toISOString().split('T')[0];
+
+  const handleBookingSubmit = () => {
+    if (!checkIn || !checkOut) {
+      alert(language === 'kz' ? "Күндерді таңдаңыз" : "Выберите даты");
+      return;
+    }
+
+    if (new Date(checkIn) >= new Date(checkOut)) {
+      alert(language === 'kz' ? "Кету күні келу күнінен кейін болуы керек" : "Дата выезда должна быть после даты заезда");
+      return;
+    }
+
+    const params = new URLSearchParams();
+    params.set("checkIn", checkIn);
+    params.set("checkOut", checkOut);
+    if (guests) params.set("guests", guests);
+    navigate(`/rooms?${params.toString()}`);
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
-      
-      {/* 3. КАРУСЕЛЬ ФОНА */}
+    <section id="hero" className="relative h-[calc(100vh-64px)] flex items-center justify-center overflow-hidden bg-black">
+      {/* Background Images */}
       <div className="absolute inset-0 z-0">
-        {heroImages.map((src, index) => (
-          <img
-            key={src}
-            src={src}
-            alt={`Hero background ${index + 1}`}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
-              index === currentImageIndex ? "opacity-100" : "opacity-0"
-            }`}
+        <AnimatePresence initial={false}>
+          <motion.img
+            key={currentImageIndex}
+            src={heroImages[currentImageIndex]}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0 w-full h-full object-cover"
           />
-        ))}
-        
-        {/* Затемнение фона */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/70" />
       </div>
 
+      {/* Стрелки по бокам */}
+      <button
+        onClick={prevSlide}
+        className="absolute left-4 z-20 p-2 text-white/50 hover:text-white transition-colors hidden md:block"
+      >
+        <ChevronLeft className="w-10 h-10" />
+      </button>
+      <button
+        onClick={nextSlide}
+        className="absolute right-4 z-20 p-2 text-white/50 hover:text-white transition-colors hidden md:block"
+      >
+        <ChevronRight className="w-10 h-10" />
+      </button>
+
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 text-center">
-        {/* Headline */}
-        <div className="max-w-4xl mx-auto mb-10 animate-fade-up">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-semibold text-white mb-6 leading-tight drop-shadow-lg">
+      <div className="relative z-10 container mx-auto px-4 text-center flex flex-col items-center justify-center h-full pb-20">
+        <div className="max-w-4xl mx-auto mb-8 animate-fade-up">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-semibold text-white mb-4 drop-shadow-lg leading-[1.1]">
             {t("hero.title")}
           </h1>
-          <p className="text-white/90 text-lg md:text-2xl font-light max-w-2xl mx-auto drop-shadow-md">
+          <p className="text-white/90 text-sm sm:text-lg font-light max-w-2xl mx-auto drop-shadow-md">
             {t("hero.subtitle")}
           </p>
         </div>
 
-        {/* Buttons Action Area */}
-        <div 
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up" 
-          style={{ animationDelay: "0.2s" }}
-        >
-          <Link to="/booking" className="w-full sm:w-auto">
-            <Button className="btn-luxury h-14 px-10 text-lg w-full sm:w-auto shadow-lg hover:shadow-primary/50">
-              {t("nav.book")}
-            </Button>
-          </Link>
+        {/* Форма бронирования */}
+        <div className="w-full max-w-4xl mx-auto animate-fade-up bg-white/95 backdrop-blur-md rounded-2xl md:rounded-full p-4 md:p-3 shadow-2xl">
+          <div className="flex flex-col md:flex-row items-center gap-3 md:gap-2">
+            <div className="w-full md:flex-1 relative group">
+              <div className="flex items-center gap-3 px-4 py-3 md:py-2 hover:bg-black/5 rounded-xl md:rounded-full transition-colors cursor-pointer">
+                <Calendar className="w-5 h-5 text-primary" />
+                <div className="flex flex-col items-start w-full">
+                  <span className="text-[10px] text-gray-400 uppercase font-black tracking-tighter">{localT.checkIn}</span>
+                  <input
+                    type="date"
+                    min={today}
+                    value={checkIn}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val) {
+                        const year = new Date(val).getFullYear();
+                        if (year > 9999) {
+                          // If user typed a 5th digit, revert to 2026
+                          const dateParts = val.split('-');
+                          dateParts[0] = '2026';
+                          setCheckIn(dateParts.join('-'));
+                        } else {
+                          setCheckIn(val);
+                          if (checkOut && new Date(val) >= new Date(checkOut)) {
+                            setCheckOut("");
+                          }
+                        }
+                      } else {
+                        setCheckIn("");
+                      }
+                    }}
+                    className="w-full bg-transparent text-sm focus:outline-none font-bold text-primary cursor-pointer"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="hidden md:block w-px h-8 bg-gray-200" />
 
-          <Link to="/rooms" className="w-full sm:w-auto">
-            <Button 
-              variant="outline" 
-              className="h-14 px-10 text-lg w-full sm:w-auto bg-white/10 backdrop-blur-sm border-white/80 text-white hover:bg-white hover:text-primary transition-all duration-300"
-            >
-              {t("nav.rooms")}
+            <div className="w-full md:flex-1 relative group">
+              <div className="flex items-center gap-3 px-4 py-3 md:py-2 hover:bg-black/5 rounded-xl md:rounded-full transition-colors cursor-pointer">
+                <Calendar className="w-5 h-5 text-primary" />
+                <div className="flex flex-col items-start w-full">
+                  <span className="text-[10px] text-gray-400 uppercase font-black tracking-tighter">{localT.checkOut}</span>
+                  <input
+                    type="date"
+                    min={checkIn || minCheckOut}
+                    value={checkOut}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val) {
+                        const year = new Date(val).getFullYear();
+                        if (year > 9999) {
+                          const dateParts = val.split('-');
+                          dateParts[0] = '2026';
+                          setCheckOut(dateParts.join('-'));
+                        } else {
+                          setCheckOut(val);
+                        }
+                      } else {
+                        setCheckOut("");
+                      }
+                    }}
+                    className="w-full bg-transparent text-sm focus:outline-none font-bold text-primary cursor-pointer"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="hidden md:block w-px h-8 bg-gray-200" />
+
+            <div className="w-full md:flex-1 relative group">
+              <div className="flex items-center gap-3 px-4 py-3 md:py-2 hover:bg-black/5 rounded-xl md:rounded-full transition-colors cursor-pointer">
+                <Users className="w-5 h-5 text-primary" />
+                <div className="flex flex-col items-start w-full">
+                  <span className="text-[10px] text-gray-400 uppercase font-black tracking-tighter">{t("nav.rooms") === "Нөмірлер" ? "Қонақтар" : "Гости"}</span>
+                  <select value={guests} onChange={(e) => setGuests(e.target.value)} className="w-full bg-transparent text-sm focus:outline-none cursor-pointer font-bold text-primary appearance-none">
+                    <option value="">{localT.guestsPlaceholder}</option>
+                    {[1, 2, 3, 4, "5+"].map(num => (
+                      <option key={num} value={num}>{localT[`g_${num === "5+" ? 5 : num}` as keyof typeof localT]}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <Button onClick={handleBookingSubmit} className="w-full md:w-auto btn-luxury h-14 md:h-12 px-10 text-sm font-black uppercase rounded-xl md:rounded-full shadow-lg hover:shadow-primary/20 transition-all active:scale-95">
+              {localT.showRooms}
             </Button>
-          </Link>
+          </div>
         </div>
       </div>
 
-      {/* ОБЪЕДИНЕННЫЙ БЛОК: Мышка + Точки 
-          Расположен по центру (left-1/2), выровнен колонкой (flex-col).
-          Это гарантирует, что центр мышки и центр ряда точек совпадают идеально.
-      */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-6 animate-float">
-        
-        {/* Мышка */}
-        <div className="w-6 h-10 rounded-full border-2 border-white/50 flex items-start justify-center p-2 backdrop-blur-sm">
-          <div className="w-1 h-2 bg-white/80 rounded-full animate-bounce" />
-        </div>
-
+      {/* НИЖНЯЯ ПАНЕЛЬ: ТОЧКИ И МЫШКА */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-6">
         {/* Точки */}
-        <div className="flex gap-4 items-center justify-center">
-          {heroImages.map((_, index) => (
+        <div className="flex gap-2">
+          {heroImages.map((_, i) => (
             <button
-              key={index}
-              onClick={() => handleDotClick(index)}
-              // Используем w-2 h-2 для ВСЕХ точек, чтобы сетка не дергалась.
-              // Увеличение делаем через scale.
-              className={`rounded-full transition-all duration-500 ease-in-out w-2 h-2 ${
-                index === currentImageIndex 
-                  ? "bg-white scale-[1.75] shadow-[0_0_8px_rgba(255,255,255,0.8)] opacity-100" 
-                  : "bg-white/40 hover:bg-white/70 hover:scale-125"
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
+              key={i}
+              onClick={() => setCurrentImageIndex(i)}
+              className={`h-1.5 transition-all duration-300 rounded-full ${i === currentImageIndex ? "w-8 bg-white" : "w-2 bg-white/40"
+                }`}
             />
           ))}
         </div>
-      </div>
 
+        {/* Анимированная мышка */}
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          className="flex flex-col items-center gap-2"
+        >
+          <div className="w-5 h-8 border-2 border-white/50 rounded-full flex justify-center p-1">
+            <motion.div
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-1 h-1.5 bg-white rounded-full"
+            />
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 };
