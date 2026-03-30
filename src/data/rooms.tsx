@@ -223,7 +223,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "lux-317": {
         id: "lux-317",
         name: { ru: "ЛЮКС 317", kz: "ЛЮКС 317", en: "LUX 317", zh: "豪华房 317", az: "LÜKS 317" },
-        price: "35 000",
+        price: "45 000",
         images: [
             "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.07.jpg",
             "/kyzylzharNomera/lux-317/Screenshot 2026-02-13 at 17.27.19.jpg",
@@ -239,7 +239,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "lux-2room": {
         id: "lux-2room",
         name: { ru: "ЛЮКС 2-Х КОМНАТНЫЙ", kz: "2 БӨЛМЕЛІ ЛЮКС", en: "LUX 2-ROOM", zh: "豪华两居室", az: "2 OTAQLI LÜKS" },
-        price: "40 000",
+        price: "50 000",
         images: ["/kyzylzharNomera/lux-2-room/IMG_0383.jpg", "/kyzylzharNomera/lux-2-room/IMG_0393.jpg", "/kyzylzharNomera/lux-2-room/IMG_0387.jpg", "/kyzylzharNomera/lux-2-room/IMG_0370.jpg", "/kyzylzharNomera/lux-2-room/IMG_0380.jpg", "/kyzylzharNomera/lux-2-room/IMG_0375.jpg", "/kyzylzharNomera/lux-2-room/IMG_0372.jpg", "/kyzylzharNomera/lux-2-room/IMG_0351.jpg", "/kyzylzharNomera/lux-2-room/IMG_0366.jpg"],
         amenityKeys: ["tv", "fridge", "wifi", "breakfast", "noSmoking", "ac", "microwave"],
         descriptionCategory: "lux"
@@ -247,7 +247,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "lux-3room": { 
         id: "lux-3room",
         name: { ru: "ЛЮКС 3-Х КОМНАТНЫЙ", kz: "3 БӨЛМЕЛІ ЛЮКС", en: "LUX 3-ROOM", zh: "豪华三居室", az: "3 OTAQLI LÜKS" },
-        price: "45 000",
+        price: "55 000",
         images: ["/kyzylzharNomera/lux-3-room-number409/IMG_0444.jpg",
             "/kyzylzharNomera/lux-3-room-number409/IMG_0451.jpg",
             "/kyzylzharNomera/lux-3-room-number409/IMG_0431.jpg",
@@ -263,7 +263,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "semilux-1room-1place": {
         id: "semilux-1room-1place",
         name: { ru: "ПОЛУЛЮКС 1-МЕСТНЫЙ 1-O КОМНАТНЫЙ", kz: "1 ОРЫНДЫҚ 1 БӨЛМЕЛІ ЖАРТЫЛАЙ ЛЮКС", en: "SEMI-LUX SINGLE 1-ROOM", zh: "单人两居室半豪华房", az: "1 NƏFƏRLİK 1 OTAQLI YARIMLÜKS" },
-        price: "19 000",
+        price: "23 000",
         images: ["/kyzylzharNomera/1-place-semilux-1room/IMG_0726.jpg", "/kyzylzharNomera/1-place-semilux-1room/IMG_0731.jpg", "/kyzylzharNomera/1-place-semilux-1room/IMG_0721.jpg", "/kyzylzharNomera/1-place-semilux-1room/IMG_0722.jpg", "/kyzylzharNomera/1-place-semilux-1room/IMG_0714.jpg"],
         amenityKeys: ["tv", "fridge", "wifi", "breakfast", "noSmoking", "ac"],
         descriptionCategory: "semilux"
@@ -271,7 +271,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "single-semilux": {
         id: "single-semilux",
         name: { ru: "ПОЛУЛЮКС 1-МЕСТНЫЙ", kz: "1 ОРЫНДЫҚ ЖАРТЫЛАЙ ЛЮКС", en: "SEMI-LUX SINGLE", zh: "单人半豪华房", az: "1 NƏFƏRLİK YARIMLÜKS" },
-        price: "28 000",
+        price: "36 000",
         images: ["/kyzylzharNomera/semilux-1place/IMG_0491.jpg", "/kyzylzharNomera/semilux-1place/IMG_0487.jpg", "/kyzylzharNomera/semilux-1place/IMG_0483.jpg", "/kyzylzharNomera/semilux-1place/IMG_0480.jpg", "/kyzylzharNomera/semilux-1place/IMG_0471.jpg", "/kyzylzharNomera/semilux-1place/IMG_0466.jpg"],
         amenityKeys: ["tv", "fridge", "wifi", "breakfast", "noSmoking", "ac"],
         descriptionCategory: "semilux"
@@ -279,7 +279,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "double-semilux": {
         id: "double-semilux",
         name: { ru: "ПОЛУЛЮКС 2-Х МЕСТНЫЙ", kz: "2 ОРЫНДЫҚ ЖАРТЫЛАЙ ЛЮКС", en: "SEMI-LUX DOUBLE", zh: "双人半豪华房", az: "2 NƏFƏRLİK YARIMLÜKS" },
-        price: "32 000",
+        price: "40 000",
         images: ["/kyzylzharNomera/semilux-2place/IMG_0529.jpg",
             "/kyzylzharNomera/semilux-2place/IMG_0535.jpg",
             "/kyzylzharNomera/semilux-2place/IMG_0519.jpg",
@@ -292,7 +292,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "family-2": {
         id: "family-2",
         name: { ru: "СЕМЕЙНЫЙ 2-Х КОМНАТНЫЙ", kz: "2 БӨЛМЕЛІ ОТБАСЫЛЫҚ", en: "FAMILY 2-ROOM", zh: "家庭两居室", az: "2 OTAQLI AİLƏVİ" },
-        price: "25 000",
+        price: "35 000",
         images: ["/kyzylzharNomera/family-2room/IMG_0323.jpg",
             "/kyzylzharNomera/family-2room/IMG_0320.jpg", "/kyzylzharNomera/family-2room/IMG_0313.jpg", "/kyzylzharNomera/family-2room/IMG_0304.jpg", "/kyzylzharNomera/family-2room/IMG_0293.jpg", "/kyzylzharNomera/family-2room/IMG_0280.jpg", "/kyzylzharNomera/family-2room/IMG_0275.jpg", "/kyzylzharNomera/family-2room/IMG_0286.jpg"],
         amenityKeys: ["tv", "fridge", "wifi", "breakfast", "noSmoking", "ac", "microwave"],
@@ -301,7 +301,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "family-3": {
         id: "family-3",
         name: { ru: "СЕМЕЙНЫЙ 3-Х КОМНАТНЫЙ", kz: "3 БӨЛМЕЛІ ОТБАСЫЛЫҚ", en: "FAMILY 3-ROOM", zh: "家庭三居室", az: "3 OTAQLI AİLƏVİ" },
-        price: "30 000",
+        price: "45 000",
         images: ["/kyzylzharNomera/family-3room/IMG_0669.jpg",
             "/kyzylzharNomera/family-3room/IMG_0689.jpg",
             "/kyzylzharNomera/family-3room/IMG_0683.jpg",
@@ -317,7 +317,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "econom-plus": {
         id: "econom-plus",
         name: { ru: "ЭКОНОМ+ ОДНОКОМНАТНЫЙ", kz: "ЭКОНОМ+ БІР БӨЛМЕЛІ", en: "ECONOM+ STUDIO", zh: "经济+单间", az: "EKONOM+ BİR OTAQLI" },
-        price: "15 000",
+        price: "19 000",
         images: ["/kyzylzharNomera/econom+-1room/IMG_0170.jpg", "/kyzylzharNomera/econom+-1room/IMG_0172.jpg", "/kyzylzharNomera/econom+-1room/IMG_0175.jpg", "/kyzylzharNomera/econom+-1room/IMG_0097.jpg", "/kyzylzharNomera/econom+-1room/IMG_0092.jpg"],
         amenityKeys: ["tv", "fridge", "wifi", "breakfast", "noSmoking"],
         descriptionCategory: "economPlus"
@@ -325,7 +325,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "econom-plus-1": {
         id: "econom-plus-1",
         name: { ru: "ЭКОНОМ+ ОДНОМЕСТНЫЙ", kz: "ЭКОНОМ+ БІР ОРЫНДЫҚ", en: "ECONOM+ SINGLE", zh: "经济+单人房", az: "EKONOM+ BİR NƏFƏRLİK" },
-        price: "22 000",
+        price: "28 000",
         images: ["/kyzylzharNomera/econom+-1place/IMG_0259.jpg", "/kyzylzharNomera/econom+-1place/IMG_0268.jpg", "/kyzylzharNomera/econom+-1place/IMG_0275.jpg", "/kyzylzharNomera/econom+-1place/IMG_0247.jpg", "/kyzylzharNomera/econom+-1place/IMG_0240.jpg"],
         amenityKeys: ["tv", "fridge", "wifi", "breakfast", "noSmoking"],
         descriptionCategory: "economPlus"
@@ -333,7 +333,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "double-econom-plus": {
         id: "double-econom-plus",
         name: { ru: "ЭКОНОМ+ 2-Х МЕСТНЫЙ", kz: "ЭКОНОМ+ 2 ОРЫНДЫҚ", en: "ECONOM+ DOUBLE", zh: "经济+双人房", az: "EKONOM+ 2 NƏFƏRLİK" },
-        price: "24 000",
+        price: "30 000",
         images: ["/kyzylzharNomera/econom+-2place/IMG_0212.jpg", "/kyzylzharNomera/econom+-2place/IMG_0213.jpg", "/kyzylzharNomera/econom+-2place/IMG_0219.jpg", "/kyzylzharNomera/econom+-2place/IMG_0203.jpg", "/kyzylzharNomera/econom+-2place/IMG_0187.jpg", "/kyzylzharNomera/econom+-2place/IMG_0209.jpg", "/kyzylzharNomera/econom+-2place/IMG_0183.jpg"],
         amenityKeys: ["tv", "fridge", "wifi", "breakfast", "noSmoking"],
         descriptionCategory: "economPlus"
@@ -341,7 +341,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "econom-plus-3": {
         id: "econom-plus-3",
         name: { ru: "ЭКОНОМ+ 3-Х МЕСТНЫЙ", kz: "ЭКОНОМ+ 3 ОРЫНДЫҚ", en: "ECONOM+ TRIPLE", zh: "经济+三人房", az: "EKONOM+ 3 NƏFƏRLİK" },
-        price: "33 000",
+        price: "45 000",
         images: ["/kyzylzharNomera/econom+-3place/IMG_0044.jpg",
             "/kyzylzharNomera/econom+-3place/IMG_0047.jpg",
             "/kyzylzharNomera/econom+-3place/IMG_0026.jpg",
@@ -355,7 +355,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "single-standard": {
         id: "single-standard",
         name: { ru: "СТАНДАРТ 1-МЕСТНЫЙ", kz: "СТАНДАРТ 1 ОРЫНДЫҚ", en: "STANDARD SINGLE", zh: "标准单人房", az: "STANDART BİR NƏFƏRLİK" },
-        price: "17 000",
+        price: "20 000",
         images: ["/kyzylzharNomera/standard-1place/IMG_0564.jpg", "/kyzylzharNomera/standard-1place/IMG_0566.jpg", "/kyzylzharNomera/standard-1place/IMG_0570.jpg", "/kyzylzharNomera/standard-1place/IMG_0556.jpg", "/kyzylzharNomera/standard-1place/IMG_0561.jpg", "/kyzylzharNomera/standard-1place/IMG_0554.jpg"],
         amenityKeys: ["bedS", "tv", "fridge", "wifi", "breakfastTime", "noSmoking"],
         descriptionCategory: "standard"
@@ -363,7 +363,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "double-standard": {
         id: "double-standard",
         name: { ru: "СТАНДАРТ 2-Х МЕСТНЫЙ", kz: "СТАНДАРТ 2 ОРЫНДЫҚ", en: "STANDARD DOUBLE", zh: "标准双人房", az: "STANDART İKИ NƏFƏRLİK" },
-        price: "27 000",
+        price: "34 000",
         images: ["/kyzylzharNomera/standard-2place/IMG_0581.jpg", "/kyzylzharNomera/standard-2place/IMG_0585.jpg", "/kyzylzharNomera/standard-2place/IMG_0582.jpg", "/kyzylzharNomera/standard-2place/IMG_0576.jpg", "/kyzylzharNomera/standard-2place/IMG_0578.jpg", "/kyzylzharNomera/standard-2place/IMG_0574.jpg"],
         amenityKeys: ["bedD", "tv", "fridge", "wifi", "breakfastTime", "noSmoking"],
         descriptionCategory: "standard"
@@ -371,7 +371,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "econom-1": {
         id: "econom-1",
         name: { ru: "ЭКОНОМ 1-МЕСТНЫЙ", kz: "ЭКОНОМ 1 ОРЫНДЫҚ", en: "ECONOM SINGLE", zh: "经济单人房", az: "EKONOM BİR NƏFƏRLİK" },
-        price: "12 000",
+        price: "15 000",
         images: ["/kyzylzharNomera/econom-1place/IMG_0611.jpg", "/kyzylzharNomera/econom-1place/IMG_0616.jpg", "/kyzylzharNomera/econom-1place/IMG_0609.jpg", "/kyzylzharNomera/econom-1place/IMG_0604.jpg"],
         amenityKeys: ["tv", "wifi", "breakfastTime", "noSmoking"],
         descriptionCategory: "econom"
@@ -379,7 +379,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "econom-1-large": {
         id: "econom-1-large",
         name: { ru: "ЭКОНОМ 1-МЕСТНЫЙ (БОЛЬШАЯ КРОВАТЬ)", kz: "ЭКОНОМ 1 ОРЫНДЫҚ (ҮЛКЕН ТӨСЕК)", en: "ECONOM SINGLE (BIG BED)", zh: "经济单人房（大床）", az: "EKONOM BİR NƏFƏRLİK (BÖYÜK ÇARPAYI)" },
-        price: "20 000",
+        price: "26 000",
         images: ["/kyzylzharNomera/econom-1palce-placebigbed/IMG_0781.jpg", "/kyzylzharNomera/econom-1palce-placebigbed/IMG_0783.jpg", "/kyzylzharNomera/econom-1palce-placebigbed/IMG_0787.jpg", "/kyzylzharNomera/econom-1palce-placebigbed/IMG_0778.jpg", "/kyzylzharNomera/econom-1palce-placebigbed/IMG_0773.jpg"],
         amenityKeys: ["tv", "fridge", "wifi", "breakfastTime", "noSmoking"],
         descriptionCategory: "econom"
@@ -387,7 +387,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "econom-2": {
         id: "econom-2",
         name: { ru: "ЭКОНОМ 2-Х МЕСТНЫЙ", kz: "ЭКОНОМ 2 ОРЫНДЫҚ", en: "ECONOM DOUBLE", zh: "经济双人房", az: "EKONOM İKИ NƏFƏRLİK" },
-        price: "20 000",
+        price: "26 000",
         images: ["/kyzylzharNomera/econom-2place/IMG_0595.jpg", "/kyzylzharNomera/econom-2place/IMG_0602.jpg", "/kyzylzharNomera/econom-2place/IMG_0600.jpg", "/kyzylzharNomera/econom-2place/IMG_0591.jpg", "/kyzylzharNomera/econom-2place/IMG_0593.jpg", "/kyzylzharNomera/econom-2place/IMG_0587.jpg"],
         amenityKeys: ["tv", "wifi", "breakfastTime", "noSmoking"],
         descriptionCategory: "econom"
@@ -395,7 +395,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "econom-3": {
         id: "econom-3",
         name: { ru: "ЭКОНОМ 3-Х МЕСТНЫЙ", kz: "ЭКОНОМ 3 ОРЫНДЫҚ", en: "ECONOM TRIPLE", zh: "经济三人房", az: "EKONOM ÜÇ NƏFƏRLİK" },
-        price: "30 000",
+        price: "39 000",
         images: ["/kyzylzharNomera/econom-3place/IMG_9978.jpg", "/kyzylzharNomera/econom-3place/IMG_9975.jpg", "/kyzylzharNomera/econom-3place/IMG_9959.jpg", "/kyzylzharNomera/econom-3place/IMG_9964.jpg", "/kyzylzharNomera/econom-3place/IMG_9956.jpg", "/kyzylzharNomera/econom-3place/IMG_9986.jpg"],
         amenityKeys: ["bedT", "tv", "fridge", "wifi", "breakfastTime", "noSmoking"],
         descriptionCategory: "econom"
@@ -403,7 +403,7 @@ export const ROOMS_DATA: Record<string, RoomData> = {
     "econom-4": {
         id: "econom-4",
         name: { ru: "ЭКОНОМ 4-Х МЕСТНЫЙ", kz: "ЭКОНОМ 4 ОРЫНДЫҚ", en: "ECONOM QUAD", zh: "经济四人房", az: "EKONOM DÖRD NƏFƏRLİK" },
-        price: "40 000",
+        price: "52 000",
         images: ["/kyzylzharNomera/econom-4place/IMG_0827.jpg",
             "/kyzylzharNomera/econom-4place/IMG_0824.jpg",
             "/kyzylzharNomera/econom-4place/IMG_0810.jpg",

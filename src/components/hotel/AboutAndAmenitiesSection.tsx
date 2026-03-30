@@ -91,18 +91,18 @@ const CONTENT_DATA = {
 
 const HOTEL_SERVICES_CONFIG = [
 
-  { img: "/Picsart_26-01-14_17-55-44-165.jpg", key: "parking" },
-  { img: "/Picsart_26-01-13_22-38-11-024.jpg", key: "wifi" },
-  { img: "/Picsart_26-01-14_17-52-03-208.jpg", key: "tv" },
-  { img: "/Picsart_26-01-14_17-58-17-441.jpg", key: "laundry" },
-  { img: "/Picsart_26-01-14_18-09-53-841.jpg", key: "buffet" },
+  { img: "/Picsart_26-01-14_17-55-44-165.png", key: "parking" },
+  { img: "/Picsart_26-01-13_22-38-11-024.png", key: "wifi" },
+  { img: "/Picsart_26-01-14_17-52-03-208.png", key: "tv" },
+  { img: "/Picsart_26-01-14_17-58-17-441.png", key: "laundry" },
+  { img: "/Picsart_26-01-14_18-09-53-841.png", key: "buffet" },
 ];
 
 const PARTNER_SERVICES_CONFIG = [
-  { img: "/Picsart_26-01-14_17-53-21-886.jpg", key: "barber" },
-  { img: "/Picsart_26-01-14_17-51-37-949.jpg", key: "taxi" },
-  { img: "/Picsart_26-01-14_18-03-39-275.jpg", key: "berlin", link: "https://berlinrest.kz" },
-  { img: "/Picsart_26-01-14_18-19-19-949.jpg", key: "parikh" },
+  { img: "/Picsart_26-01-14_17-53-21-886.png", key: "barber" },
+  { img: "/Picsart_26-01-14_17-51-37-949.png", key: "taxi" },
+  { img: "/Picsart_26-01-14_18-03-39-275.png", key: "berlin", link: "https://berlinrest.kz" },
+  { img: "/Picsart_26-01-14_18-19-19-949.png", key: "parikh" },
 
 ];
 
