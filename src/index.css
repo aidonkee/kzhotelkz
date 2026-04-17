@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark Red Brand Color Palette */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 20%;
+
+    /* Dark Red primary - #7f1d1d */
+    --primary: 0 61% 31%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Warm beige secondary */
+    --secondary: 30 20% 96%;
+    --secondary-foreground: 0 0% 20%;
+
+    --muted: 30 15% 94%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 0 61% 31%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Исправлено: убраны пробелы в числах (84. 2% -> 84.2%) */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 30 15% 88%;
+    --input: 30 15% 88%;
+    --ring: 0 61% 31%;
+
+    --radius: 0.75rem;
+
+    /* Custom brand tokens */
+    --gold: 36 45% 55%;
+    --gold-light: 36 50% 70%;
+    --gold-dark: 36 40% 42%;
+    --beige: 30 20% 96%;
+    --beige-dark: 30 15% 90%;
+    --charcoal: 0 0% 20%;
+    --charcoal-light: 0 0% 40%;
+    
+    --lantern-glow: 25 75% 50%;
+    
+    /* Navbar height для расчетов */
+    --navbar-height: 64px;
+  }
+
+  /* Исправлено: убран пробел (. dark -> .dark) */
+  .dark {
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
+    --primary: 0 61% 40%;
+    --lantern-glow: 25 70% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  footer {
+    background-color: #000 !important;
+    color: hsl(var(--primary)) !important;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased relative;
+    font-family: 'Montserrat', sans-serif;
+    
+    background-image: url('/bg-pattern.jpg');
+    background-repeat: repeat;
+    background-size: 400px auto; 
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom, 
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background: 
+      radial-gradient(circle 800px at 10% 20%, rgba(127, 29, 29, 0.03) 0%, transparent 40%),
+      radial-gradient(circle 600px at 90% 80%, rgba(212, 165, 116, 0.05) 0%, transparent 40%);
+    animation: soul-breathe 8s ease-in-out infinite;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-primary;
+  }
+  
+  p, span, a, li, button {
+    font-family: 'Montserrat', sans-serif;
+  }
+}
+
+@keyframes soul-breathe {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/90 backdrop-blur-xl border border-white/30;
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent;
+  }
+
+  .btn-luxury {
+    @apply px-8 py-4 bg-primary text-primary-foreground rounded-lg font-medium 
+           transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 
+           hover:scale-[1.02] active:scale-100;
+  }
+
+  .btn-luxury-outline {
+    @apply px-8 py-4 border-2 border-primary text-primary rounded-lg font-medium 
+           transition-all duration-300 hover:bg-primary hover:text-primary-foreground;
+  }
+
+  /* Исправлено: убран пробел (. section-padding -> .section-padding) */
+  .section-padding {
+    @apply py-20 md:py-28 px-6 md:px-12;
+  }
+  
+  .card-glow {
+    @apply transition-all duration-500;
+  }
+  
+  /* Исправлено: убраны пробелы (. card-glow: hover -> .card-glow:hover) */
+  .card-glow:hover {
+    box-shadow: 0 10px 40px hsl(var(--primary) / 0.08);
+  }
+  
+  /* Snap Scroll секция */
+  /* Исправлено: убран пробел (. snap-section -> .snap-section) */
+  .snap-section {
+    @apply min-h-screen;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
+
+@layer utilities {
+  .animate-fade-up {
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes infinite-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  
+  .animate-infinite-scroll {
+    display: flex;
+    width: max-content;
+    animation: infinite-scroll 60s linear infinite;
+  }
+  
+  /* Исправлено: убраны пробелы (.pause-on-hover: hover -> .pause-on-hover:hover) */
+  .pause-on-hover:hover {
+    animation-play-state: paused;
+  }
+  
+  /* Скрытие скроллбара */
+  /* Исправлено: убраны пробелы (.scrollbar-hide: :-webkit-scrollbar -> .scrollbar-hide::-webkit-scrollbar) */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
