@@ -53,8 +53,8 @@ const HeroSection = () => {
   const [guests, setGuests] = useState("");
 
   const heroImages = [
-    "/view-5.jpg",
-    "/view-4.jpg",
+    "/rakhat.png",
+    "/rakhat2.png",
     "/kyzylzharNomera/reception/IMG_9899.jpg",
     "/reception-new.jpeg",
     "/kyzylzharNomera/reception/IMG_9921.jpg",
@@ -114,7 +114,7 @@ const HeroSection = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
-            className={`absolute inset-0 w-full h-full object-cover ${currentImageIndex < 2 ? 'object-top' : 'object-center'}`}
+            className={`absolute left-0 right-0 top-0 w-full object-cover ${currentImageIndex < 2 ? 'h-[110%] object-top' : 'h-full object-center'}`}
           />
         </AnimatePresence>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/70" />
