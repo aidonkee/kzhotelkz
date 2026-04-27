@@ -55,7 +55,6 @@ const HeroSection = () => {
   const heroImages = [
     "/rakhat.png",
     "/rakhat2.png",
-    "/kyzylzharNomera/reception/IMG_9899.jpg",
     "/reception-new.jpeg",
     "/kyzylzharNomera/reception/IMG_9921.jpg",
     "/kyzylzharNomera/reception/IMG_9928.jpg"
