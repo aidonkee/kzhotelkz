@@ -388,7 +388,14 @@ export const ROOMS_DATA: Record<string, RoomData> = {
         id: "econom-2",
         name: { ru: "ЭКОНОМ 2-Х МЕСТНЫЙ", kz: "ЭКОНОМ 2 ОРЫНДЫҚ", en: "ECONOM DOUBLE", zh: "经济双人房", az: "EKONOM İKИ NƏFƏRLİK" },
         price: "26 000",
-        images: ["/kyzylzharNomera/econom-2place/IMG_0595.jpg", "/kyzylzharNomera/econom-2place/IMG_0602.jpg", "/kyzylzharNomera/econom-2place/IMG_0600.jpg", "/kyzylzharNomera/econom-2place/IMG_0587.jpg"],
+        images: [
+            "/kyzylzharNomera/econom-2place/econom-pic1.jpg",
+            "/kyzylzharNomera/econom-2place/econom-pic2.jpg",
+            "/kyzylzharNomera/econom-2place/econom-pic3.jpg",
+            "/kyzylzharNomera/econom-2place/econom-pic4.jpg",
+            "/kyzylzharNomera/econom-2place/econom-pic5.jpg",
+            "/kyzylzharNomera/econom-2place/econom-pic6.jpg"
+        ],
         amenityKeys: ["tv", "wifi", "breakfastTime", "noSmoking"],
         descriptionCategory: "econom"
     },
