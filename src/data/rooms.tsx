@@ -403,12 +403,14 @@ export const ROOMS_DATA: Record<string, RoomData> = {
         id: "econom-3",
         name: { ru: "ЭКОНОМ 3-Х МЕСТНЫЙ", kz: "ЭКОНОМ 3 ОРЫНДЫҚ", en: "ECONOM TRIPLE", zh: "经济三人房", az: "EKONOM ÜÇ NƏFƏRLİK" },
         price: "39 000",
-        images: ["/kyzylzharNomera/econom-3place/econome-1.png",
-             "/kyzylzharNomera/econom-3place/econome-6.png",
-              "/kyzylzharNomera/econom-3place/econome-3.png",
-               "/kyzylzharNomera/econom-3place/econome-4.png",
-                "/kyzylzharNomera/econom-3place/econome-5.png",
-                 "/kyzylzharNomera/econom-3place/econome-2.jpg"],
+        images: [
+            "/kyzylzharNomera/econom-3place/econome-4.png",
+            "/kyzylzharNomera/econom-3place/econome-3.png",
+            "/kyzylzharNomera/econom-3place/econome-6.png",
+            "/kyzylzharNomera/econom-3place/econome-1.png",
+            "/kyzylzharNomera/econom-3place/econome-5.png",
+            "/kyzylzharNomera/econom-3place/econome-2.jpg"
+        ],
         amenityKeys: ["bedT", "tv", "fridge", "wifi", "breakfastTime", "noSmoking"],
         descriptionCategory: "econom"
     },

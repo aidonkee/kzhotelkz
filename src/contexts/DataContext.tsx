@@ -179,7 +179,7 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     // Инициализация из localStorage или дефолтных данных
     const [rooms, setRooms] = useState<Record<string, RoomData>>(() => {
-        const savedRoomsStr = localStorage.getItem("app_rooms_v3");
+        const savedRoomsStr = localStorage.getItem("app_rooms_v4");
         if (savedRoomsStr) {
             try {
                 const savedRooms = JSON.parse(savedRoomsStr);
@@ -229,7 +229,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Сохранение в localStorage при изменениях
     useEffect(() => {
-        localStorage.setItem("app_rooms_v3", JSON.stringify(rooms));
+        localStorage.setItem("app_rooms_v4", JSON.stringify(rooms));
     }, [rooms]);
 
     useEffect(() => {

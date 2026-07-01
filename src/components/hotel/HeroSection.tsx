@@ -54,7 +54,7 @@ const HeroSection = () => {
 
   const heroImages = [
     "/kyzylzharNomera/dron-1.JPG",
-    "/kyzylzharNomera/dron-2.JPG",
+    "/kyzylzharNomera/dron-4.png",
     "/reception-new.jpeg",
     "/kyzylzharNomera/reception/IMG_9921.jpg",
     "/kyzylzharNomera/reception/IMG_9928.jpg"
@@ -113,11 +113,10 @@ const HeroSection = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
-            className={`absolute left-0 right-0 top-0 w-full h-full object-cover ${
-              currentImageIndex === 0 ? 'object-[center_35%]' : 
-              currentImageIndex === 1 ? 'object-center' : 
-              'object-center'
-            }`}
+            className={`absolute left-0 right-0 top-0 w-full h-full object-cover ${currentImageIndex === 0 ? 'object-[center_35%]' :
+              currentImageIndex === 1 ? 'object-center' :
+                'object-center'
+              }`}
           />
         </AnimatePresence>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/70" />
